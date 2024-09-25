@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>タスク詳細 - GetItDone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./detail.css" />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow p-4">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-blue-600">GetItDone</h1>
+        <div class="flex items-center">
+          <span class="text-gray-700">KietCT</span>
+          <span class="text-sm text-gray-500 ml-2">(Admin)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Task Details -->
+    <div class="max-w-3xl mx-auto mt-6 p-6 bg-white shadow rounded-md">
+      <h2 class="text-xl font-bold mb-4">タスク詳細</h2>
+
+      <div class="border-t pt-4">
+        <!-- Title and Status -->
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold">タイトル</h3>
+          <div class="flex items-center space-x-2 mt-2">
+            <label class="inline-flex items-center">
+              <i class="fa-regular fa-circle-check text-blue-600 text-xl"></i>
+              <span class="ml-2">ステータス</span>
+            </label>
+            <span
+              class="text-red-500 font-bold text-sm px-2 py-1 rounded bg-red-100"
+              >未完了</span
+            >
+          </div>
+        </div>
+
+        <!-- Dates -->
+        <div class="grid grid-rows-2 gap-4 mb-6">
+          <div class="flex items-center">
+            <i class="fas fa-calendar-alt text-blue-600 mr-2 text-xl"></i>
+            <div class="Dates-Fix">
+              <label class="block text-sm text-gray-700">開始日</label>
+              <!-- Thay thế input date mới -->
+              <input
+                type="date"
+                class="form-control shadow-none"
+                name="checkin"
+                id="startDateInput"
+                required=""
+              />
+            </div>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-calendar-alt text-blue-600 mr-2 text-xl"></i>
+            <div class="Dates-Fix">
+              <label class="block text-sm text-gray-700">締め切り</label>
+              <!-- Thay thế input date mới -->
+              <input
+                type="date"
+                class="form-control shadow-none"
+                name="checkin"
+                id="endDateInput"
+                required=""
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-6">
+          <label class="block text-sm text-gray-700" for="description"
+            >デスクリプション</label
+          >
+          <textarea
+            id="description"
+            class="w-full h-24 mt-2 p-2 border border-gray-300 rounded-md"
+            placeholder="デスクリプションを入力してください"
+          ></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-4">
+          <button class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md">
+            キャンセル
+          </button>
+          <button class="px-4 py-2 bg-blue-600 text-white rounded-md">
+            保存
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

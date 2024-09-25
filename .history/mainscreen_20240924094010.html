@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GetItDone Task List</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header Section -->
+    <header class="bg-white shadow p-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <h1 class="text-3xl font-bold text-blue-600">GetItDone</h1>
+      </div>
+      <div class="flex items-center">
+        <span class="text-gray-700 mr-4"
+          >KietCT <span class="text-sm text-gray-500">(Admin)</span></span
+        >
+        <button class="bg-blue-500 text-white px-4 py-2 rounded">
+          + 新規作成
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="container mx-auto mt-8">
+      <div class="flex justify-between">
+        <!-- Task List -->
+        <div class="w-2/3 bg-white p-4 shadow rounded-lg">
+          <h2 class="text-xl font-bold mb-4">タスク一覧</h2>
+          <!-- Task Group 1 -->
+          <div class="mb-4">
+            <h3 class="font-bold text-gray-700">28/08/2024</h3>
+
+            <!-- Task 1 -->
+            <div class="flex justify-between items-center space-x-4 my-2">
+              <div class="flex items-center space-x-4">
+                <input
+                  type="checkbox"
+                  class="form-checkbox h-5 w-5 toggle-complete"
+                />
+                <span class="text-gray-900 task-text">タスク 1</span>
+              </div>
+              <div class="flex space-x-2">
+                <button class="text-blue-500 hover:text-blue-700">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="text-gray-500 hover:text-gray-700">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button class="text-red-500 hover:text-red-700">
+                  <i class="fa fa-trash"></i>
+                </button>
+                <button class="text-gray-500 hover:text-yellow-500 star-icon">
+                  <i class="fa fa-star"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Task 2 -->
+            <div class="flex justify-between items-center space-x-4 my-2">
+              <div class="flex items-center space-x-4">
+                <input
+                  type="checkbox"
+                  class="form-checkbox h-5 w-5 toggle-complete"
+                  checked
+                />
+                <span class="text-gray-400 line-through task-text"
+                  >タスク 2</span
+                >
+              </div>
+              <div class="flex space-x-2">
+                <button class="text-blue-500 hover:text-blue-700">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <button class="text-gray-500 hover:text-gray-700">
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button class="text-red-500 hover:text-red-700">
+                  <i class="fa fa-trash"></i>
+                </button>
+                <button class="text-gray-500 hover:text-yellow-500 star-icon">
+                  <i class="fa fa-star"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task Group 2 -->
+          <div>
+              <h3 class="font-bold text-gray-700">29/08/2024</h3>
+  
+              <!-- Task ① -->
+              <div class="flex justify-between items-center space-x-4 my-2">
+                <div class="flex items-center space-x-4">
+                  <input type="checkbox" class="form-checkbox h-5 w-5" />
+                  <span class="text-gray-900">タスク ①</span>
+                </div>
+                <div class="flex space-x-2">
+                  <button class="text-blue-500 hover:text-blue-700">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                  <button class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="text-red-500 hover:text-red-700">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <button class="text-yellow-500 hover:text-yellow-700">
+                    <i class="fa fa-star"></i>
+                  </button>
+                </div>
+              </div>
+  
+              <!-- Task ② -->
+              <div class="flex justify-between items-center space-x-4 my-2">
+                <div class="flex items-center space-x-4">
+                  <input type="checkbox" class="form-checkbox h-5 w-5" checked />
+                  <span class="text-gray-400 line-through">タスク ②</span>
+                </div>
+                <div class="flex space-x-2">
+                  <button class="text-blue-500 hover:text-blue-700">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                  <button class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="text-red-500 hover:text-red-700">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <button class="text-yellow-500 hover:text-yellow-700">
+                    <i class="fa fa-star"></i>
+                  </button>
+                </div>
+              </div>
+  
+              <!-- Task ③ -->
+              <div class="flex justify-between items-center space-x-4 my-2">
+                <div class="flex items-center space-x-4">
+                  <input type="checkbox" class="form-checkbox h-5 w-5" checked />
+                  <span class="text-yellow-600">タスク ③</span>
+                </div>
+                <div class="flex space-x-2">
+                  <button class="text-blue-500 hover:text-blue-700">
+                    <i class="fa fa-eye"></i>
+                  </button>
+                  <button class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="text-red-500 hover:text-red-700">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <button class="text-yellow-500 hover:text-yellow-700">
+                    <i class="fa fa-star"></i>
+                  </button>
+                </div>
+              </div>
+          </div>
+        </div>
+        </div>
+
+        <!-- Task Completion Summary -->
+        <div
+          id="task-summary"
+          class="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center hidden"
+        >
+          <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h3 class="font-bold text-gray-700">28/08/2024:</h3>
+            <p class="text-gray-700">• 完了タスク: 1/2</p>
+            <p class="text-gray-700">• スタータスク: 0</p>
+            <h3 class="font-bold text-gray-700 mt-4">29/08/2024:</h3>
+            <p class="text-gray-700">• 完了タスク: 2/3</p>
+            <p class="text-gray-700">• スタータスク: 1</p>
+            <button
+              id="close-popup"
+              class="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Icons FontAwesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="./mainscreen.js"></script>
+  </body>
+</html>
