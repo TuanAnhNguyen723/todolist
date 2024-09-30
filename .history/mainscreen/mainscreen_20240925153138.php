@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<?php
+include('../config.php');
+?>
+
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
@@ -24,9 +29,6 @@
         <span class="text-gray-700 mr-4"
           >KietCT <span class="text-sm text-gray-500">(Admin)</span></span
         >
-        <button class="bg-blue-500 text-white px-4 py-2 rounded">
-          + 新規作成
-        </button>
       </div>
     </header>
 
@@ -222,33 +224,31 @@
               <form>
                 <!-- Task Title -->
                 <input
+                  for="title"
+                  id ="title"
                   type="text"
                   placeholder="タイトルが入力してください"
-                  class="w-full border border-gray-300 p-2 rounded-lg mb-4"
+                  class="title w-full border border-gray-300 p-2 rounded-lg mb-4"
                 />
 
-                <!-- Date Pickers -->
+               <!-- Date Pickers -->
                 <div class="flex justify-between space-x-4 mb-4">
-                  <div class="w-1/2 relative">
-                    <i
-                      class="fas fa-clock absolute left-3 top-3 text-gray-500"
-                    ></i>
-                    <input
-                      type="text"
-                      placeholder="Tue Sep 10"
-                      class="w-full pl-10 border border-gray-300 p-2 rounded-lg"
-                    />
-                  </div>
-                  <div class="w-1/2 relative">
-                    <i
-                      class="fas fa-clock absolute left-3 top-3 text-gray-500"
-                    ></i>
-                    <input
-                      type="text"
-                      placeholder="Tue Sep 10"
-                      class="w-full pl-10 border border-gray-300 p-2 rounded-lg"
-                    />
-                  </div>
+                    <div class="w-1/2 relative">
+                      <label for="startDate" class="sr-only">Start Date</label>
+                      <input
+                        type="date"
+                        id="time_start"
+                        class="w-full border border-gray-300 p-2 rounded-lg"
+                      />
+                    </div>
+                    <div class="w-1/2 relative">
+                      <label for="endDate" class="sr-only">End Date</label>
+                      <input
+                        type="date"
+                        id="time_end"
+                        class="w-full border border-gray-300 p-2 rounded-lg"
+                      />
+                    </div>
                 </div>
 
                 <!-- Task Description -->

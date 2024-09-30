@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
   viewButtons.forEach((button) => {
     button.addEventListener("click", () => {
       // Redirect to the detail.html page
-      window.location.href = "./detail/detail.html";
+      window.location.href = "../detail/detail.php";
     });
   });
 });
@@ -96,29 +96,91 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  const statusButton = document.getElementById('statusButton');
-  const statusDropdown = document.getElementById('statusDropdown');
-  const statusText = document.getElementById('statusText');
-  const dropdownItems = statusDropdown.querySelectorAll('li');
+document.addEventListener("DOMContentLoaded", function () {
+  const statusButton = document.getElementById("statusButton");
+  const statusDropdown = document.getElementById("statusDropdown");
+  const statusText = document.getElementById("statusText");
+  const dropdownItems = statusDropdown.querySelectorAll("li");
 
   // Hiển thị hoặc ẩn dropdown khi nhấn vào button
-  statusButton.addEventListener('click', function () {
-    statusDropdown.classList.toggle('hidden');
+  statusButton.addEventListener("click", function () {
+    statusDropdown.classList.toggle("hidden");
   });
 
   // Cập nhật giá trị khi chọn trong dropdown
-  dropdownItems.forEach(item => {
-    item.addEventListener('click', function () {
-      statusText.innerText = this.getAttribute('data-value');
-      statusDropdown.classList.add('hidden');
+  dropdownItems.forEach((item) => {
+    item.addEventListener("click", function () {
+      statusText.innerText = this.getAttribute("data-value");
+      statusDropdown.classList.add("hidden");
     });
   });
 
   // Đóng dropdown khi nhấn ra ngoài
-  window.addEventListener('click', function (e) {
+  window.addEventListener("click", function (e) {
     if (!statusButton.contains(e.target)) {
-      statusDropdown.classList.add('hidden');
+      statusDropdown.classList.add("hidden");
     }
   });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const taskAddForm = document.querySelector("form");
+  const createButton = taskAddForm.querySelector("button[type='button']");
+
+  createButton.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const title = taskAddForm.querySelector("input[type='text']").value;
+    const timeStart =
+      taskAddForm.querySelectorAll("input[type='text']")[1].value;
+    const timeEnd = taskAddForm.querySelectorAll("input[type='text']")[2].value;
+    const description = taskAddForm.querySelector("textarea").value;
+
+    // Gửi dữ liệu qua AJAX (Fetch API)
+    const response = await fetch("./add_task.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        title: title,
+        description: description,
+        time_start: timeStart,
+        time_end: timeEnd,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.status === "success") {
+      alert("タスクが正常に追加されました。");
+      // Ẩn modal sau khi lưu thành công
+      document.getElementById("taskAddModal").classList.add("hidden");
+      // Tải lại trang để cập nhật danh sách task mới (hoặc tự thêm vào danh sách)
+      window.location.reload();
+    } else {
+      alert("エラーが発生しました。再度お試しください。");
+    }
+  });
+});
+
+function editTask(taskId) {
+  // Thực hiện gọi AJAX hoặc lấy dữ liệu từ PHP để điền vào modal
+  fetch(`get_task_data.php?task_id=${taskId}`)
+      .then(response => response.json())
+      .then(data => {
+          // Điền dữ liệu vào modal
+          document.querySelector('input[name="title"]').value = data.title;
+          document.querySelector('input[name="time_start"]').value = data.time_start;
+          document.querySelector('input[name="time_end"]').value = data.time_end;
+          document.querySelector('textarea[name="description"]').value = data.description;
+
+          // Hiển thị modal
+          document.getElementById('taskAddModal').classList.remove('hidden');
+      });
+}
+
+// Hàm đóng modal
+document.getElementById('closeModal').addEventListener('click', () => {
+  document.getElementById('taskAddModal').classList.add('hidden');
 });
