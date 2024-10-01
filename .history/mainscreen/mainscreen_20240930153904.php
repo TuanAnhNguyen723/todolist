@@ -302,7 +302,6 @@ include '../mainscreen/mainscreenController.php';
             </button>
 
 
-
             <!-- Modal Content -->
             <h2 class="text-2xl font-bold mb-4">タスク編集</h2>
             <!-- Form -->

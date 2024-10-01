@@ -45,7 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("form").classList.remove("hidden");
           document.getElementById("taskEditModal").classList.remove("hidden");
         } else {
-          console.error("Task ID mismatch! Expected:", taskId, "Received:", task.task_id);
+          console.error(
+            "Task ID mismatch! Expected:",
+            taskId,
+            "Received:",
+            task.task_id
+          );
         }
       })
       .catch((error) => {
@@ -204,6 +209,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("cancelButton")
     .addEventListener("click", hideTaskAddModal);
+
+  // Sự kiện: Hiển thị modal chỉnh sửa khi click icon pencil
+  document.querySelectorAll(".fa-pencil").forEach((editIcon) => {
+    editIcon.addEventListener("click", (event) => {
+      event.preventDefault();
+      const taskId = editIcon
+        .closest(".task-container")
+        .querySelector("input[name='task_id']").value;
+      showTaskEditModal(taskId);
+    });
+  });
 
   // Sự kiện: Lưu thông tin sau khi chỉnh sửa task
   document

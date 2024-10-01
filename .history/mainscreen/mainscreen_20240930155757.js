@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Gán sự kiện click cho tất cả các icon chỉnh sửa (pencil)
-  document.querySelectorAll(".edit-task-button").forEach((editButton) => {
-    editButton.addEventListener("click", function (event) {
+  // Sử dụng event delegation để gán sự kiện click cho tất cả các icon chỉnh sửa (pencil)
+  document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("edit-task-button")) {
       event.preventDefault();
 
-      // Lấy task_id trực tiếp từ thuộc tính data-task-id của nút bút chỉnh sửa
-      const taskId = this.getAttribute("data-task-id");
+      // Lấy task_id từ thuộc tính data-task-id của nút bút chỉnh sửa
+      const taskId = event.target.getAttribute("data-task-id");
 
       console.log("Task ID clicked: ", taskId); // Kiểm tra task_id khi click
 
       // Hiển thị modal chỉnh sửa và tải dữ liệu từ server
       showTaskEditModal(taskId);
-    });
+    }
   });
 
   // Hàm để hiển thị modal chỉnh sửa với dữ liệu từ server
@@ -31,15 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
           console.log("Fetched task data: ", task); // Kiểm tra dữ liệu trả về từ server
 
           // Điền thông tin của task vào modal
-          document.querySelector("input[name='edit_task_id']").value =
-            task.task_id;
+          document.querySelector("input[name='edit_task_id']").value = task.task_id;
           document.querySelector("input[name='edit_title']").value = task.title;
-          document.querySelector("textarea[name='edit_description']").value =
-            task.description;
-          document.querySelector("input[name='edit_time_start']").value =
-            task.time_start;
-          document.querySelector("input[name='edit_time_end']").value =
-            task.time_end;
+          document.querySelector("textarea[name='edit_description']").value = task.description;
+          document.querySelector("input[name='edit_time_start']").value = task.time_start;
+          document.querySelector("input[name='edit_time_end']").value = task.time_end;
 
           // Hiển thị form và modal sau khi dữ liệu đã sẵn sàng
           document.querySelector("form").classList.remove("hidden");
@@ -53,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
+  
   // Hàm để thêm hoặc xóa gạch ngang trên task
   function toggleTaskComplete(checkbox) {
     const taskText = checkbox.parentElement.querySelector(".task-text");
@@ -204,6 +201,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("cancelButton")
     .addEventListener("click", hideTaskAddModal);
+
+  // Sự kiện: Hiển thị modal chỉnh sửa khi click icon pencil
+  document.querySelectorAll(".fa-pencil").forEach((editIcon) => {
+    editIcon.addEventListener("click", (event) => {
+      event.preventDefault();
+      const taskId = editIcon
+        .closest(".task-container")
+        .querySelector("input[name='task_id']").value;
+      showTaskEditModal(taskId);
+    });
+  });
 
   // Sự kiện: Lưu thông tin sau khi chỉnh sửa task
   document

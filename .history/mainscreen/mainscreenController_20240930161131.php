@@ -100,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $time_start = $_POST['time_start'];
         $time_end = $_POST['time_end'];
 
-        // Kiểm tra task_id đã tồn tại và cập nhật dữ liệu
         $sql = "UPDATE task SET title = ?, description = ?, time_start = ?, time_end = ? WHERE task_id = ?";
         $stmt = $conn->prepare($sql);
 
@@ -122,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
+// Xử lý yêu cầu lấy thông tin task theo task_id
 if (isset($_GET['task_id'])) {
     $task_id = intval($_GET['task_id']); // Đảm bảo task_id là số nguyên hợp lệ
 
@@ -138,7 +138,6 @@ if (isset($_GET['task_id'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Trả về duy nhất một task có task_id đã click
         $task = $result->fetch_assoc();
         echo json_encode($task); // Trả về dữ liệu JSON
     } else {
@@ -149,7 +148,6 @@ if (isset($_GET['task_id'])) {
     $conn->close();
     exit();
 }
-
 
 // Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
 $sql = "SELECT * FROM task ORDER BY time_start ASC";

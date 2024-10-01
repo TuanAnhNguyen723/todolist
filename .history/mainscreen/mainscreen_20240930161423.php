@@ -72,11 +72,15 @@ include '../mainscreen/mainscreenController.php';
 
           <!-- Task Groups by Date -->
           <div class="task-container">
-          <?php foreach ($tasks_by_date as $date => $tasks): ?>
-            <div class="mb-4 border-t pt-4">
-              <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
+            <?php 
+            foreach ($tasks_by_date as $date => $tasks): // Duyệt qua các nhóm task theo ngày
+              foreach ($tasks as $index => $task): // Duyệt qua từng task trong ngày
+            ?>
+                <?php if ($index === 0): // Chỉ hiển thị tiêu đề ngày cho task đầu tiên trong nhóm ?>
+                  <div class="mb-4 border-t pt-4">
+                    <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
+                <?php endif; ?>
 
-              <?php foreach ($tasks as $task): ?>
                 <div class="flex justify-between items-center space-x-4 my-2">
                   <div class="flex items-center space-x-4">
                     <input
@@ -98,7 +102,7 @@ include '../mainscreen/mainscreenController.php';
                     <!-- Nút sửa với thuộc tính data-task-id để lưu task_id -->
                     <button class="text-gray-500 hover:text-gray-700 edit-task-button" data-task-id="<?php echo $task['task_id']; ?>">
                         <i class="fa fa-pencil"></i>
-                      </button>
+                    </button>
 
                     <!-- Nút xóa với form POST -->
                     <form action="./mainscreenController.php" method="POST" style="display:inline;">
@@ -114,9 +118,17 @@ include '../mainscreen/mainscreenController.php';
                     </button>
                   </div>
                 </div>
-              <?php endforeach; ?>
-            </div>
-          <?php endforeach; ?>
+
+                <?php if ($index === count($tasks) - 1): // Đóng div nhóm cho task cuối cùng trong ngày ?>
+                  </div>
+                <?php endif; ?>
+              
+            <?php 
+              endforeach; 
+            endforeach;
+            ?>
+          </div>
+
 
 
           </div>
@@ -300,7 +312,6 @@ include '../mainscreen/mainscreenController.php';
             <button id="closeEditModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
               <i class="fas fa-times"></i>
             </button>
-
 
 
             <!-- Modal Content -->

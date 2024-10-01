@@ -1,58 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Gán sự kiện click cho tất cả các icon chỉnh sửa (pencil)
-  document.querySelectorAll(".edit-task-button").forEach((editButton) => {
-    editButton.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      // Lấy task_id trực tiếp từ thuộc tính data-task-id của nút bút chỉnh sửa
-      const taskId = this.getAttribute("data-task-id");
-
-      console.log("Task ID clicked: ", taskId); // Kiểm tra task_id khi click
-
-      // Hiển thị modal chỉnh sửa và tải dữ liệu từ server
-      showTaskEditModal(taskId);
-    });
-  });
-
-  // Hàm để hiển thị modal chỉnh sửa với dữ liệu từ server
-  function showTaskEditModal(taskId) {
-    // Ẩn form trong quá trình chờ dữ liệu
-    document.querySelector("form").classList.add("hidden");
-
-    // Thêm timestamp để ngăn trình duyệt lưu cache
-    const timestamp = new Date().getTime();
-
-    // Gửi yêu cầu AJAX để lấy thông tin task từ server dựa trên task_id
-    fetch(`mainscreenController.php?task_id=${taskId}&_=${timestamp}`)
-      .then((response) => response.json())
-      .then((task) => {
-        // Kiểm tra nếu task_id từ dữ liệu trả về khớp với task_id đã click
-        if (task.task_id == taskId) {
-          console.log("Fetched task data: ", task); // Kiểm tra dữ liệu trả về từ server
-
-          // Điền thông tin của task vào modal
-          document.querySelector("input[name='edit_task_id']").value =
-            task.task_id;
-          document.querySelector("input[name='edit_title']").value = task.title;
-          document.querySelector("textarea[name='edit_description']").value =
-            task.description;
-          document.querySelector("input[name='edit_time_start']").value =
-            task.time_start;
-          document.querySelector("input[name='edit_time_end']").value =
-            task.time_end;
-
-          // Hiển thị form và modal sau khi dữ liệu đã sẵn sàng
-          document.querySelector("form").classList.remove("hidden");
-          document.getElementById("taskEditModal").classList.remove("hidden");
-        } else {
-          console.error("Task ID mismatch! Expected:", taskId, "Received:", task.task_id);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching task data:", error);
-      });
-  }
-
   // Hàm để thêm hoặc xóa gạch ngang trên task
   function toggleTaskComplete(checkbox) {
     const taskText = checkbox.parentElement.querySelector(".task-text");
@@ -99,6 +45,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // Ẩn modal thêm task mới
   function hideTaskAddModal() {
     document.getElementById("taskAddModal").classList.add("hidden");
+  }
+
+  // Hiển thị modal chỉnh sửa với dữ liệu từ database
+  function showTaskEditModal(taskId) {
+    // Gửi yêu cầu AJAX để lấy thông tin task từ database dựa trên task_id
+    fetch(`mainscreenController.php?task_id=${taskId}`)
+      .then((response) => response.json())
+      .then((task) => {
+        // Điền thông tin của task vào modal
+        document.querySelector("input[name='edit_task_id']").value =
+          task.task_id;
+        document.querySelector("input[name='edit_title']").value = task.title;
+        document.querySelector("textarea[name='edit_description']").value =
+          task.description;
+        document.querySelector("input[name='edit_time_start']").value =
+          task.time_start;
+        document.querySelector("input[name='edit_time_end']").value =
+          task.time_end;
+
+        // Hiển thị modal
+        document.getElementById("taskEditModal").classList.remove("hidden");
+      })
+      .catch((error) => console.error("Error fetching task data:", error));
   }
 
   // Ẩn modal chỉnh sửa task
@@ -205,6 +174,17 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("cancelButton")
     .addEventListener("click", hideTaskAddModal);
 
+  // Sự kiện: Hiển thị modal chỉnh sửa khi click icon pencil
+  document.querySelectorAll(".fa-pencil").forEach((editIcon) => {
+    editIcon.addEventListener("click", (event) => {
+      event.preventDefault();
+      const taskId = editIcon
+        .closest(".task-container")
+        .querySelector("input[name='task_id']").value;
+      showTaskEditModal(taskId);
+    });
+  });
+
   // Sự kiện: Lưu thông tin sau khi chỉnh sửa task
   document
     .getElementById("saveEditButton")
@@ -260,5 +240,49 @@ document.addEventListener("DOMContentLoaded", () => {
       ).value;
       viewTaskDetails(taskId);
     });
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Hàm để hiển thị modal chỉnh sửa với dữ liệu từ database
+  function showTaskEditModal(taskId) {
+    // Gửi yêu cầu AJAX để lấy thông tin task từ database dựa trên task_id
+    fetch(`mainscreenController.php?task_id=${taskId}`)
+      .then((response) => response.json())
+      .then((task) => {
+        // Điền thông tin của task vào modal
+        document.querySelector("input[name='edit_task_id']").value = task.task_id;
+        document.querySelector("input[name='edit_title']").value = task.title;
+        document.querySelector("textarea[name='edit_description']").value = task.description;
+
+        // Định dạng date cho time_start và time_end
+        const timeStart = new Date(task.time_start).toISOString().slice(0, 10);
+        const timeEnd = new Date(task.time_end).toISOString().slice(0, 10);
+
+        document.querySelector("input[name='edit_time_start']").value = timeStart;
+        document.querySelector("input[name='edit_time_end']").value = timeEnd;
+
+        // Hiển thị modal
+        document.getElementById("taskEditModal").classList.remove("hidden");
+      })
+      .catch((error) => console.error("Error fetching task data:", error));
+  }
+
+  // Sự kiện: Hiển thị modal chỉnh sửa khi click icon pencil
+  document.querySelectorAll(".edit-task-button").forEach((editIcon) => {
+    editIcon.addEventListener("click", (event) => {
+      event.preventDefault();
+      const taskId = editIcon.getAttribute("data-task-id");
+      showTaskEditModal(taskId);
+    });
+  });
+
+  // Sự kiện: Ẩn modal khi người dùng nhấn nút "x" hoặc "cancel"
+  document.getElementById("closeEditModal").addEventListener("click", () => {
+    document.getElementById("taskEditModal").classList.add("hidden");
+  });
+
+  document.getElementById("cancelEditButton").addEventListener("click", () => {
+    document.getElementById("taskEditModal").classList.add("hidden");
   });
 });

@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Gán sự kiện click cho tất cả các icon chỉnh sửa (pencil)
-  document.querySelectorAll(".edit-task-button").forEach((editButton) => {
-    editButton.addEventListener("click", function (event) {
+  // Sử dụng event delegation để gán sự kiện click cho tất cả các icon chỉnh sửa (pencil)
+  document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("edit-task-button")) {
       event.preventDefault();
 
-      // Lấy task_id trực tiếp từ thuộc tính data-task-id của nút bút chỉnh sửa
-      const taskId = this.getAttribute("data-task-id");
+      // Lấy task_id từ thuộc tính data-task-id của nút bút chỉnh sửa
+      const taskId = event.target.getAttribute("data-task-id");
 
       console.log("Task ID clicked: ", taskId); // Kiểm tra task_id khi click
 
       // Hiển thị modal chỉnh sửa và tải dữ liệu từ server
       showTaskEditModal(taskId);
-    });
+    }
   });
 
   // Hàm để hiển thị modal chỉnh sửa với dữ liệu từ server
@@ -45,14 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("form").classList.remove("hidden");
           document.getElementById("taskEditModal").classList.remove("hidden");
         } else {
-          console.error("Task ID mismatch! Expected:", taskId, "Received:", task.task_id);
+          console.error(
+            "Task ID mismatch! Expected:",
+            taskId,
+            "Received:",
+            task.task_id
+          );
         }
       })
       .catch((error) => {
         console.error("Error fetching task data:", error);
       });
   }
-
   // Hàm để thêm hoặc xóa gạch ngang trên task
   function toggleTaskComplete(checkbox) {
     const taskText = checkbox.parentElement.querySelector(".task-text");
@@ -204,6 +208,17 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("cancelButton")
     .addEventListener("click", hideTaskAddModal);
+
+  // Sự kiện: Hiển thị modal chỉnh sửa khi click icon pencil
+  document.querySelectorAll(".fa-pencil").forEach((editIcon) => {
+    editIcon.addEventListener("click", (event) => {
+      event.preventDefault();
+      const taskId = editIcon
+        .closest(".task-container")
+        .querySelector("input[name='task_id']").value;
+      showTaskEditModal(taskId);
+    });
+  });
 
   // Sự kiện: Lưu thông tin sau khi chỉnh sửa task
   document

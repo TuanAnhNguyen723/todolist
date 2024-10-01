@@ -45,7 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("form").classList.remove("hidden");
           document.getElementById("taskEditModal").classList.remove("hidden");
         } else {
-          console.error("Task ID mismatch! Expected:", taskId, "Received:", task.task_id);
+          console.error(
+            "Task ID mismatch! Expected:",
+            taskId,
+            "Received:",
+            task.task_id
+          );
         }
       })
       .catch((error) => {

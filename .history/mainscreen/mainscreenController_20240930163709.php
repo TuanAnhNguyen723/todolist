@@ -100,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $time_start = $_POST['time_start'];
         $time_end = $_POST['time_end'];
 
-        // Kiểm tra task_id đã tồn tại và cập nhật dữ liệu
         $sql = "UPDATE task SET title = ?, description = ?, time_start = ?, time_end = ? WHERE task_id = ?";
         $stmt = $conn->prepare($sql);
 
@@ -135,11 +134,11 @@ if (isset($_GET['task_id'])) {
 
     $stmt->bind_param("i", $task_id);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $result2 = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
+    if ($result2->num_rows > 0) {
         // Trả về duy nhất một task có task_id đã click
-        $task = $result->fetch_assoc();
+        $task = $result2->fetch_assoc();
         echo json_encode($task); // Trả về dữ liệu JSON
     } else {
         echo json_encode(['error' => 'Không tìm thấy task.']);

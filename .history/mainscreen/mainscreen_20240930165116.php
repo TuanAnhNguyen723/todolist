@@ -292,55 +292,57 @@ include '../mainscreen/mainscreenController.php';
         </div>
 
 
-     <!-- Modal chỉnh sửa task -->
-      <div id="taskEditModal" class="fixed z-50 inset-0 overflow-y-auto hidden">
-        <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
-          <div class="relative bg-white w-96 p-6 rounded-lg shadow-lg">
-            <!-- Close Button -->
-            <button id="closeEditModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-              <i class="fas fa-times"></i>
-            </button>
+        <!-- Modal chỉnh sửa task -->
+        <div id="taskEditModal" class="fixed z-50 inset-0 overflow-y-auto hidden">
+          <div class="flex items-center justify-center min-h-screen bg-black bg-opacity-50">
+            <div class="relative bg-white w-96 p-6 rounded-lg shadow-lg">
+              <!-- Close Button -->
+              <button id="closeEditModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+              </button>
 
+              <!-- Modal Title -->
+              <h2 class="text-2xl font-bold mb-4">タスク編集</h2>
 
+              <!-- Form chỉnh sửa task -->
+              <form id="editTaskForm" action="mainscreenController.php" method="POST">
+                <!-- Task ID (ẩn) để biết nhiệm vụ nào cần chỉnh sửa -->
+                <input type="hidden" name="edit_task_id" id="edit_task_id" value="">
 
-            <!-- Modal Content -->
-            <h2 class="text-2xl font-bold mb-4">タスク編集</h2>
-            <!-- Form -->
-            <form id="editTaskForm" action="mainscreenController.php" method="POST">
-              <!-- Task ID (ẩn) để biết nhiệm vụ nào cần chỉnh sửa -->
-              <input type="hidden" name="edit_task_id" value="">
+                <!-- Task Title -->
+                <label for="edit_title">タイトル</label>
+                <input id="edit_title" name="edit_title" type="text" placeholder="タイトルを入力してください" class="w-full border border-gray-300 p-2 rounded-lg mb-4" />
 
-              <!-- Task Title -->
-              <input name="edit_title" type="text" placeholder="タイトルを入力してください" class="edit-title w-full border border-gray-300 p-2 rounded-lg mb-4" />
-
-              <!-- Date Pickers -->
-              <div class="flex justify-between space-x-4 mb-4">
-                <div class="w-1/2 relative">
-                  <label for="edit_time_start" class="sr-only">Start Date</label>
-                  <input type="date" name="edit_time_start" class="edit-time-start w-full border border-gray-300 p-2 rounded-lg" />
+                <!-- Date Pickers -->
+                <div class="flex justify-between space-x-4 mb-4">
+                  <div class="w-1/2 relative">
+                    <label for="edit_time_start" class="sr-only">Start Date</label>
+                    <input id="edit_time_start" name="edit_time_start" type="date" class="w-full border border-gray-300 p-2 rounded-lg" />
+                  </div>
+                  <div class="w-1/2 relative">
+                    <label for="edit_time_end" class="sr-only">End Date</label>
+                    <input id="edit_time_end" name="edit_time_end" type="date" class="w-full border border-gray-300 p-2 rounded-lg" />
+                  </div>
                 </div>
-                <div class="w-1/2 relative">
-                  <label for="edit_time_end" class="sr-only">End Date</label>
-                  <input type="date" name="edit_time_end" class="edit-time-end w-full border border-gray-300 p-2 rounded-lg" />
+
+                <!-- Task Description -->
+                <label for="edit_description"></label>
+                <textarea id="edit_description" name="edit_description" placeholder="説明を入力してください" class="w-full border border-gray-300 p-2 rounded-lg mb-4" rows="4"></textarea>
+
+                <!-- Buttons -->
+                <div class="flex justify-between">
+                  <button id="saveEditButton" type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full mr-2">
+                    保存
+                  </button>
+                  <button type="button" class="border border-blue-500 text-blue-500 px-4 py-2 rounded-lg w-full" id="cancelEditButton">
+                    キャンセル
+                  </button>
                 </div>
-              </div>
-
-              <!-- Task Description -->
-              <textarea name="edit_description" placeholder="ディスクリプションを入力してください" class="edit-description w-full border border-gray-300 p-2 rounded-lg mb-4" rows="4"></textarea>
-
-              <!-- Buttons -->
-              <div class="flex justify-between">
-                <button id="saveEditButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full mr-2">
-                  保存
-                </button>
-                <button type="button" class="border border-blue-500 text-blue-500 px-4 py-2 rounded-lg w-full" id="cancelEditButton">
-                  キャンセル
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+
 
 
 

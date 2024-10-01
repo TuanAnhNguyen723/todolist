@@ -97,8 +97,8 @@ include '../mainscreen/mainscreenController.php';
 
                     <!-- Nút sửa với thuộc tính data-task-id để lưu task_id -->
                     <button class="text-gray-500 hover:text-gray-700 edit-task-button" data-task-id="<?php echo $task['task_id']; ?>">
-                        <i class="fa fa-pencil"></i>
-                      </button>
+                      <i class="fa fa-pencil"></i>
+                    </button>
 
                     <!-- Nút xóa với form POST -->
                     <form action="./mainscreenController.php" method="POST" style="display:inline;">
@@ -301,7 +301,10 @@ include '../mainscreen/mainscreenController.php';
               <i class="fas fa-times"></i>
             </button>
 
-
+            <!-- Spinner hiển thị khi đang tải dữ liệu -->
+            <div id="loadingSpinner" class="flex justify-center items-center mb-4 hidden">
+              <div class="loader"></div>
+            </div>
 
             <!-- Modal Content -->
             <h2 class="text-2xl font-bold mb-4">タスク編集</h2>

@@ -100,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $time_start = $_POST['time_start'];
         $time_end = $_POST['time_end'];
 
-        // Kiểm tra task_id đã tồn tại và cập nhật dữ liệu
         $sql = "UPDATE task SET title = ?, description = ?, time_start = ?, time_end = ? WHERE task_id = ?";
         $stmt = $conn->prepare($sql);
 
@@ -153,12 +152,12 @@ if (isset($_GET['task_id'])) {
 
 // Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
 $sql = "SELECT * FROM task ORDER BY time_start ASC";
-$result = $conn->query($sql);
+$result2 = $conn->query($sql);
 
 $tasks_by_date = [];
 
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
+if ($result2->num_rows > 0) {
+    while ($row = $result2->fetch_assoc()) {
         $date = date('Y-m-d', strtotime($row['time_start']));
         $tasks_by_date[$date][] = $row;
     }

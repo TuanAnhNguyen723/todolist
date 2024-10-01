@@ -301,7 +301,10 @@ include '../mainscreen/mainscreenController.php';
               <i class="fas fa-times"></i>
             </button>
 
-
+            <!-- Spinner hiển thị khi đang tải dữ liệu -->
+            <div id="loadingSpinner" class="flex justify-center items-center mb-4 hidden">
+              <div class="loader"></div>
+            </div>
 
             <!-- Modal Content -->
             <h2 class="text-2xl font-bold mb-4">タスク編集</h2>

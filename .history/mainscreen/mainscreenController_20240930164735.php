@@ -92,34 +92,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Xử lý yêu cầu chỉnh sửa (update) task
-    if (isset($_POST['edit_task']) && isset($_POST['task_id'])) {
-        $task_id = intval($_POST['task_id']);
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-        $time_start = $_POST['time_start'];
-        $time_end = $_POST['time_end'];
+// Xử lý yêu cầu chỉnh sửa (update) task
+if (isset($_POST['edit_task']) && isset($_POST['task_id'])) {
+    $task_id = intval($_POST['task_id']);
+    $title = $_POST['title'];
+    $description = $_POST['description'];
+    $time_start = $_POST['time_start'];
+    $time_end = $_POST['time_end'];
 
-        // Kiểm tra task_id đã tồn tại và cập nhật dữ liệu
-        $sql = "UPDATE task SET title = ?, description = ?, time_start = ?, time_end = ? WHERE task_id = ?";
-        $stmt = $conn->prepare($sql);
+    // Kiểm tra task_id đã tồn tại và cập nhật dữ liệu
+    $sql = "UPDATE task SET title = ?, description = ?, time_start = ?, time_end = ? WHERE task_id = ?";
+    $stmt = $conn->prepare($sql);
 
-        if ($stmt === false) {
-            die('Lỗi chuẩn bị SQL: ' . $conn->error);
-        }
-
-        $stmt->bind_param("ssssi", $title, $description, $time_start, $time_end, $task_id);
-
-        if ($stmt->execute()) {
-            echo "Nhiệm vụ đã được cập nhật thành công.";
-        } else {
-            echo "Lỗi khi cập nhật nhiệm vụ.";
-        }
-
-        $stmt->close();
-        $conn->close();
-        exit();
+    if ($stmt === false) {
+        die('Lỗi chuẩn bị SQL: ' . $conn->error);
     }
+
+    $stmt->bind_param("ssssi", $title, $description, $time_start, $time_end, $task_id);
+
+    if ($stmt->execute()) {
+        echo "Nhiệm vụ đã được cập nhật thành công.";
+    } else {
+        echo "Lỗi khi cập nhật nhiệm vụ.";
+    }
+
+    $stmt->close();
+    $conn->close();
+    exit();
+}
 }
 
 if (isset($_GET['task_id'])) {

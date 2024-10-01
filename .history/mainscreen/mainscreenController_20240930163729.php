@@ -100,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $time_start = $_POST['time_start'];
         $time_end = $_POST['time_end'];
 
-        // Kiểm tra task_id đã tồn tại và cập nhật dữ liệu
         $sql = "UPDATE task SET title = ?, description = ?, time_start = ?, time_end = ? WHERE task_id = ?";
         $stmt = $conn->prepare($sql);
 

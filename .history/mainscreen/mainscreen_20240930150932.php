@@ -73,50 +73,50 @@ include '../mainscreen/mainscreenController.php';
           <!-- Task Groups by Date -->
           <div class="task-container">
           <?php foreach ($tasks_by_date as $date => $tasks): ?>
-            <div class="mb-4 border-t pt-4">
-              <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
+  <div class="mb-4 border-t pt-4">
+    <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
 
-              <?php foreach ($tasks as $task): ?>
-                <div class="flex justify-between items-center space-x-4 my-2">
-                  <div class="flex items-center space-x-4">
-                    <input
-                      type="checkbox"
-                      class="form-checkbox h-5 w-5 toggle-complete"
-                      data-task-id="<?php echo $task['task_id']; ?>"
-                      <?php echo $task['checked'] ? 'checked' : ''; ?>
-                    />
-                    <span class="task-text <?php echo $task['checked'] ? 'line-through text-gray-400' : ''; ?>">
-                      <?php echo htmlspecialchars($task['title']); ?>
-                    </span>
-                  </div>
-                  <div class="flex space-x-2">
-                    <!-- Nút xem chi tiết -->
-                    <button class="text-blue-500 hover:text-blue-700">
-                      <i class="fa fa-eye"></i>
-                    </button>
+    <?php foreach ($tasks as $task): ?>
+      <div class="flex justify-between items-center space-x-4 my-2">
+        <div class="flex items-center space-x-4">
+          <input
+            type="checkbox"
+            class="form-checkbox h-5 w-5 toggle-complete"
+            data-task-id="<?php echo $task['task_id']; ?>"
+            <?php echo $task['checked'] ? 'checked' : ''; ?>
+          />
+          <span class="task-text <?php echo $task['checked'] ? 'line-through text-gray-400' : ''; ?>">
+            <?php echo htmlspecialchars($task['title']); ?>
+          </span>
+        </div>
+        <div class="flex space-x-2">
+          <!-- Nút xem chi tiết -->
+          <button class="text-blue-500 hover:text-blue-700">
+            <i class="fa fa-eye"></i>
+          </button>
 
-                    <!-- Nút sửa với thuộc tính data-task-id để lưu task_id -->
-                    <button class="text-gray-500 hover:text-gray-700 edit-task-button" data-task-id="<?php echo $task['task_id']; ?>">
-                        <i class="fa fa-pencil"></i>
-                      </button>
+          <!-- Nút sửa với thuộc tính data-task-id để lưu task_id -->
+          <button class="text-gray-500 hover:text-gray-700 edit-task-button" data-task-id="<?php echo $task['task_id']; ?>">
+            <i class="fa fa-pencil"></i>
+          </button>
 
-                    <!-- Nút xóa với form POST -->
-                    <form action="./mainscreenController.php" method="POST" style="display:inline;">
-                      <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
-                      <button type="submit" name="delete_task" class="text-red-500 hover:text-red-700">
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </form>
+          <!-- Nút xóa với form POST -->
+          <form action="./mainscreenController.php" method="POST" style="display:inline;">
+            <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+            <button type="submit" name="delete_task" class="text-red-500 hover:text-red-700">
+              <i class="fa fa-trash"></i>
+            </button>
+          </form>
 
-                    <!-- Nút đánh dấu sao -->
-                    <button class="text-gray-500 hover:text-yellow-300 star-icon">
-                      <i class="fa fa-star"></i>
-                    </button>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-            </div>
-          <?php endforeach; ?>
+          <!-- Nút đánh dấu sao -->
+          <button class="text-gray-500 hover:text-yellow-300 star-icon">
+            <i class="fa fa-star"></i>
+          </button>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+<?php endforeach; ?>
 
 
           </div>
@@ -301,7 +301,10 @@ include '../mainscreen/mainscreenController.php';
               <i class="fas fa-times"></i>
             </button>
 
-
+            <!-- Spinner hiển thị khi đang tải dữ liệu -->
+            <div id="loadingSpinner" class="flex justify-center items-center mb-4 hidden">
+              <div class="loader"></div>
+            </div>
 
             <!-- Modal Content -->
             <h2 class="text-2xl font-bold mb-4">タスク編集</h2>

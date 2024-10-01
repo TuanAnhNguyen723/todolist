@@ -45,7 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("form").classList.remove("hidden");
           document.getElementById("taskEditModal").classList.remove("hidden");
         } else {
-          console.error("Task ID mismatch! Expected:", taskId, "Received:", task.task_id);
+          console.error(
+            "Task ID mismatch! Expected:",
+            taskId,
+            "Received:",
+            task.task_id
+          );
         }
       })
       .catch((error) => {
@@ -205,16 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("cancelButton")
     .addEventListener("click", hideTaskAddModal);
 
-  // Sự kiện: Lưu thông tin sau khi chỉnh sửa task
-  document
-    .getElementById("saveEditButton")
-    .addEventListener("click", saveTaskEdit);
-  document
-    .getElementById("closeEditModal")
-    .addEventListener("click", hideTaskEditModal);
-  document
-    .getElementById("cancelEditButton")
-    .addEventListener("click", hideTaskEditModal);
 
   // Sự kiện: Xóa task
   document.querySelectorAll(".fa-trash").forEach((trashIcon) => {

@@ -5,6 +5,7 @@ include '../config.php';
 // Kiểm tra nếu form được gửi đi
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    // Kiểm tra kết nối
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -14,9 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $task_id = intval($_POST['task_id']);
         $checked = intval($_POST['checked']);
 
+        // Cập nhật trạng thái checked trong CSDL
         $sql = "UPDATE task SET checked = ? WHERE task_id = ?";
         $stmt = $conn->prepare($sql);
-        
+
         if ($stmt === false) {
             die('Lỗi chuẩn bị SQL: ' . $conn->error);
         }
@@ -34,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Xử lý yêu cầu thêm task mới
+    // Xử lý thêm task mới
     if (isset($_POST['title']) && isset($_POST['time_start']) && isset($_POST['time_end'])) {
         $title = $_POST['title'];
         $description = $_POST['description'];
@@ -100,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $time_start = $_POST['time_start'];
         $time_end = $_POST['time_end'];
 
-        // Kiểm tra task_id đã tồn tại và cập nhật dữ liệu
         $sql = "UPDATE task SET title = ?, description = ?, time_start = ?, time_end = ? WHERE task_id = ?";
         $stmt = $conn->prepare($sql);
 
@@ -123,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 if (isset($_GET['task_id'])) {
-    $task_id = intval($_GET['task_id']); // Đảm bảo task_id là số nguyên hợp lệ
+    $task_id = intval($_GET['task_id']); // Đảm bảo task_id là số nguyên
 
     // Chuẩn bị câu truy vấn SQL để lấy thông tin task dựa trên task_id
     $sql = "SELECT * FROM task WHERE task_id = ?";
@@ -133,12 +134,11 @@ if (isset($_GET['task_id'])) {
         die('Lỗi chuẩn bị SQL: ' . $conn->error);
     }
 
-    $stmt->bind_param("i", $task_id);
+    $stmt->bind_param("i", $task_id); // Ràng buộc tham số task_id
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Trả về duy nhất một task có task_id đã click
         $task = $result->fetch_assoc();
         echo json_encode($task); // Trả về dữ liệu JSON
     } else {
@@ -166,5 +166,5 @@ if ($result->num_rows > 0) {
     $tasks_by_date = []; // Không có dữ liệu
 }
 
-// Đóng kết nối
+// Đóng kết nối sau khi truy vấn
 $conn->close();
