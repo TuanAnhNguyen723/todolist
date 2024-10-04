@@ -122,60 +122,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Xử lý cập nhật trạng thái 'star' của task
-if (isset($_POST['task_id']) && isset($_POST['star'])) {
-    $task_id = intval($_POST['task_id']);
-    $star = intval($_POST['star']);
+    if (isset($_POST['task_id']) && isset($_POST['star'])) {
+        $task_id = intval($_POST['task_id']);
+        $star = intval($_POST['star']);
 
-    $sql = "UPDATE task SET star = ? WHERE task_id = ?";
-    $stmt = $conn->prepare($sql);
-    
-    if ($stmt === false) {
-        die('Lỗi chuẩn bị SQL: ' . $conn->error);
+        $sql = "UPDATE task SET star = ? WHERE task_id = ?";
+        $stmt = $conn->prepare($sql);
+        
+        if ($stmt === false) {
+            die('Lỗi chuẩn bị SQL: ' . $conn->error);
+        }
+
+        $stmt->bind_param("ii", $star, $task_id);
+
+        if ($stmt->execute()) {
+            echo "Trạng thái ngôi sao đã được cập nhật thành công.";
+        } else {
+            echo "Lỗi khi cập nhật trạng thái ngôi sao.";
+        }
+
+        $stmt->close();
+        $conn->close();
+        exit();
     }
-
-    $stmt->bind_param("ii", $star, $task_id);
-
-    if ($stmt->execute()) {
-        echo "Trạng thái ngôi sao đã được cập nhật thành công.";
-    } else {
-        echo "Lỗi khi cập nhật trạng thái ngôi sao.";
-    }
-
-    $stmt->close();
-    $conn->close();
-    exit();
 }
-
-}
-
-if (isset($_GET['task_id'])) {
-    $task_id = intval($_GET['task_id']); // Đảm bảo task_id là số nguyên hợp lệ
-
-    // Chuẩn bị câu truy vấn SQL để lấy thông tin task dựa trên task_id
-    $sql = "SELECT * FROM task WHERE task_id = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt === false) {
-        die('Lỗi chuẩn bị SQL: ' . $conn->error);
-    }
-
-    $stmt->bind_param("i", $task_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        // Trả về duy nhất một task có task_id đã click
-        $task = $result->fetch_assoc();
-        echo json_encode($task); // Trả về dữ liệu JSON
-    } else {
-        echo json_encode(['error' => 'Không tìm thấy task.']);
-    }
-
-    $stmt->close();
-    $conn->close();
-    exit();
-}
-
 
 // Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
 $sql = "SELECT * FROM task ORDER BY time_start ASC";
@@ -192,30 +162,6 @@ if ($result->num_rows > 0) {
     $tasks_by_date = []; // Không có dữ liệu
 }
 
-
-// Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
-$sql = "SELECT time_start, 
-               COUNT(CASE WHEN checked = 1 THEN 1 END) AS completed_tasks, 
-               COUNT(CASE WHEN star = 1 THEN 1 END) AS starred_tasks 
-        FROM task
-        GROUP BY time_start
-        ORDER BY time_start ASC";
-        
-$result = $conn->query($sql);
-
-$task_summary = [];
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $date = date('Y-m-d', strtotime($row['time_start']));
-        $task_summary[$date] = [
-            'completed_tasks' => $row['completed_tasks'],
-            'starred_tasks' => $row['starred_tasks']
-        ];
-    }
-} else {
-    $task_summary = []; // Không có dữ liệu
-}
-
 // Đóng kết nối
 $conn->close();
+?>

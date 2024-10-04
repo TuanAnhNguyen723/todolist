@@ -16,3 +16,8 @@
     }
   }
 
+  /* Màu cho checkbox khi có trạng thái "star" */
+.form-checkbox:checked {
+  background-color: #ECC94B; /* Màu vàng tương đương với bg-yellow-500 */
+  border-color: #ECC94B; /* Viền vàng */
+}

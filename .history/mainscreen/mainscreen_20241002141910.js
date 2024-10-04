@@ -129,10 +129,10 @@ document.querySelectorAll(".star-icon").forEach((starIcon) => {
     if (taskText && checkbox) {
       if (isStarred) {
         taskText.classList.add("text-yellow-500");
-        checkbox.classList.add("accent-yellow-500");
+        checkbox.classList.add("accent-pink-500");
       } else {
         taskText.classList.remove("text-yellow-500");
-        checkbox.classList.remove("accent-yellow-500");
+        checkbox.classList.remove("accent-pink-500");
       }
     } else {
       console.error("Không tìm thấy .task-text hoặc .form-checkbox trong .task-container!");
@@ -319,26 +319,3 @@ document.querySelectorAll(".star-icon").forEach((starIcon) => {
     });
   });
 });
-
-// Hàm format date để hiển thị theo yyyy/mm/dd
-function formatDateToYMD(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và đảm bảo có 2 chữ số
-  const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và đảm bảo có 2 chữ số
-  return `${year}/${month}/${day}`;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Giả sử dữ liệu này được trả về từ server
-  fetch(`mainscreenController.php?task_id=1`)
-  .then((response) => response.json())
-  .then((task) => {
-      if (task.task_id) {
-          // Format các giá trị ngày từ server sang yyyy/mm/dd
-          document.querySelector("input[name='edit_time_start']").value = formatDateToYMD(task.time_start);
-          document.querySelector("input[name='edit_time_end']").value = formatDateToYMD(task.time_end);
-      }
-  });
-});
-

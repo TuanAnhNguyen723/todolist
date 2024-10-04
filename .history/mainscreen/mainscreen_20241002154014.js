@@ -26,16 +26,15 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(`mainscreenController.php?task_id=${taskId}&_=${timestamp}`)
       .then((response) => response.json())
       .then((task) => {
-        // Kiểm tra nếu task_id từ dữ liệu trả về khớp với task_id đã click
         if (task.task_id == taskId) {
-          console.log("Fetched task data: ", task); // Kiểm tra dữ liệu trả về từ server
-
           // Điền thông tin của task vào modal
           document.querySelector("input[name='edit_task_id']").value =
             task.task_id;
           document.querySelector("input[name='edit_title']").value = task.title;
           document.querySelector("textarea[name='edit_description']").value =
             task.description;
+
+          // Đảm bảo rằng thời gian bắt đầu và kết thúc được định dạng theo yyyy/mm/dd
           document.querySelector("input[name='edit_time_start']").value =
             task.time_start;
           document.querySelector("input[name='edit_time_end']").value =
@@ -44,15 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
           // Hiển thị form và modal sau khi dữ liệu đã sẵn sàng
           document.querySelector("form").classList.remove("hidden");
           document.getElementById("taskEditModal").classList.remove("hidden");
-        } else {
-          console.error(
-            "Task ID mismatch! Expected:",
-            taskId,
-            "Received:",
-            task.task_id
-          );
         }
       })
+
       .catch((error) => {
         console.error("Error fetching task data:", error);
       });
@@ -96,62 +89,63 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-// Sự kiện: Toggle trạng thái ngôi sao cho task
-document.querySelectorAll(".star-icon").forEach((starIcon) => {
-  starIcon.addEventListener("click", function () {
-    // Lấy task_id từ thuộc tính data-task-id
-    const taskId = this.getAttribute("data-task-id");
+  // Sự kiện: Toggle trạng thái ngôi sao cho task
+  document.querySelectorAll(".star-icon").forEach((starIcon) => {
+    starIcon.addEventListener("click", function () {
+      // Lấy task_id từ thuộc tính data-task-id
+      const taskId = this.getAttribute("data-task-id");
 
-    // Toggle trạng thái hiển thị của icon ngôi sao
-    this.classList.toggle("text-yellow-300");
+      // Toggle trạng thái hiển thị của icon ngôi sao
+      this.classList.toggle("text-yellow-300");
 
-    // Xác định trạng thái "star" dựa trên việc icon có chứa class "text-yellow-300" hay không
-    const isStarred = this.classList.contains("text-yellow-300") ? 1 : 0;
+      // Xác định trạng thái "star" dựa trên việc icon có chứa class "text-yellow-300" hay không
+      const isStarred = this.classList.contains("text-yellow-300") ? 1 : 0;
 
-    // Tìm task container cụ thể chứa các thông tin khác như .task-text và .form-checkbox
-    const taskContainer = this.closest(".task-container2");
+      // Tìm task container cụ thể chứa các thông tin khác như .task-text và .form-checkbox
+      const taskContainer = this.closest(".task-container2");
 
-    // Nếu không tìm thấy taskContainer, log ra lỗi
-    if (!taskContainer) {
-      console.error("Không tìm thấy .task-container2 cho task_id:", taskId);
-      return;
-    }
-
-    // Tìm các phần tử .task-text và .form-checkbox trong task container
-    const taskText = taskContainer.querySelector(".task-text");
-    const checkbox = taskContainer.querySelector(".form-checkbox");
-
-    // Kiểm tra xem taskText và checkbox có tồn tại không
-    console.log("Task Text Element:", taskText);
-    console.log("Checkbox Element:", checkbox);
-
-    // Nếu tìm thấy .task-text và .form-checkbox thì thực hiện thao tác thay đổi màu sắc
-    if (taskText && checkbox) {
-      if (isStarred) {
-        taskText.classList.add("text-yellow-500");
-        checkbox.classList.add("accent-yellow-500");
-      } else {
-        taskText.classList.remove("text-yellow-500");
-        checkbox.classList.remove("accent-yellow-500");
+      // Nếu không tìm thấy taskContainer, log ra lỗi
+      if (!taskContainer) {
+        console.error("Không tìm thấy .task-container2 cho task_id:", taskId);
+        return;
       }
-    } else {
-      console.error("Không tìm thấy .task-text hoặc .form-checkbox trong .task-container!");
-    }
 
-    // Cập nhật trạng thái "star" vào cơ sở dữ liệu qua AJAX
-    fetch("mainscreenController.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: `task_id=${taskId}&star=${isStarred}`,
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log(data); // Kiểm tra kết quả trả về từ server
+      // Tìm các phần tử .task-text và .form-checkbox trong task container
+      const taskText = taskContainer.querySelector(".task-text");
+      const checkbox = taskContainer.querySelector(".form-checkbox");
+
+      // Kiểm tra xem taskText và checkbox có tồn tại không
+      console.log("Task Text Element:", taskText);
+      console.log("Checkbox Element:", checkbox);
+
+      // Nếu tìm thấy .task-text và .form-checkbox thì thực hiện thao tác thay đổi màu sắc
+      if (taskText && checkbox) {
+        if (isStarred) {
+          taskText.classList.add("text-yellow-500");
+          checkbox.classList.add("accent-yellow-500");
+        } else {
+          taskText.classList.remove("text-yellow-500");
+          checkbox.classList.remove("accent-yellow-500");
+        }
+      } else {
+        console.error(
+          "Không tìm thấy .task-text hoặc .form-checkbox trong .task-container!"
+        );
+      }
+
+      // Cập nhật trạng thái "star" vào cơ sở dữ liệu qua AJAX
+      fetch("mainscreenController.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `task_id=${taskId}&star=${isStarred}`,
       })
-      .catch((error) => console.error("Error:", error));
+        .then((response) => response.text())
+        .then((data) => {
+          console.log(data); // Kiểm tra kết quả trả về từ server
+        })
+        .catch((error) => console.error("Error:", error));
+    });
   });
-});
-
 
   // Hiển thị modal thêm task mới
   function showTaskAddModal() {
@@ -319,26 +313,3 @@ document.querySelectorAll(".star-icon").forEach((starIcon) => {
     });
   });
 });
-
-// Hàm format date để hiển thị theo yyyy/mm/dd
-function formatDateToYMD(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và đảm bảo có 2 chữ số
-  const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và đảm bảo có 2 chữ số
-  return `${year}/${month}/${day}`;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Giả sử dữ liệu này được trả về từ server
-  fetch(`mainscreenController.php?task_id=1`)
-  .then((response) => response.json())
-  .then((task) => {
-      if (task.task_id) {
-          // Format các giá trị ngày từ server sang yyyy/mm/dd
-          document.querySelector("input[name='edit_time_start']").value = formatDateToYMD(task.time_start);
-          document.querySelector("input[name='edit_time_end']").value = formatDateToYMD(task.time_end);
-      }
-  });
-});
-

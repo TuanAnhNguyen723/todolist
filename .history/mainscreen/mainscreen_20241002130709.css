@@ -16,3 +16,11 @@
     }
   }
 
+  .text-yellow-500 {
+    color: #f59e0b; /* Màu vàng */
+  }
+  
+  .bg-yellow-500 {
+    background-color: #f59e0b; /* Màu nền vàng cho checkbox */
+  }
+  

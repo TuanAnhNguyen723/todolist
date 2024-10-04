@@ -42,7 +42,7 @@ include '../mainscreen/mainscreenController.php';
     <main class="container mx-auto mt-8">
       <div class="flex justify-between">
         <!-- Task List -->
-        <div class="w-full bg-white p-4 shadow rounded-lg">
+        <div class="w-2/3 bg-white p-4 shadow rounded-lg">
           <div class="flex justify-between items-center mb-4">
             <!-- Task List Title -->
             <h2 class="text-xl font-bold">タスク一覧</h2>
@@ -72,13 +72,13 @@ include '../mainscreen/mainscreenController.php';
           </div>
 
         <!-- Tạo một khối Flex cho task list và task summary -->
-        <div class="flex justify-between border-t-black border-t-2 pt-4 ">
+        <div class="flex justify-between">
           <!-- Task List -->
           <div class="w-2/3">
             <!-- Task Groups by Date -->
             <div class="task-container">
               <?php foreach ($tasks_by_date as $date => $tasks): ?>
-                <div class="mb-4 border-b border-b-black pt-4">
+                <div class="mb-4 border-t pt-4">
                   <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
 
                   <?php foreach ($tasks as $task): ?>
@@ -126,26 +126,20 @@ include '../mainscreen/mainscreenController.php';
           </div>
 
               <!-- Task Completion Summary -->
-              <div id="task-summary" class="w-1/3 bg-grey-900 p-6 rounded-lg shadow-lg ml-4 bg-neutral-100 border-2">
-                <?php if (!empty($task_summary)): ?>
-                    <?php foreach ($task_summary as $date => $summary): ?>
-                        <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?>:</h3>
-                        <ul class="list-disc pl-5">
-                            <li>完了タスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['completed_tasks']); ?>
-                                </span>
-                            </li>
-                            <li>スタータスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['starred_tasks']); ?>
-                                </span>
-                            </li>
-                        </ul>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>データがありません。</p>
-                <?php endif; ?>
+              <div id="task-summary" class="w-1/3 bg-grey-900 p-6 rounded-lg shadow-lg ml-4">
+                <h3 class="font-bold text-gray-700">28/08/2024:</h3>
+                <ul class="list-disc pl-5">
+                  <li>完了タスク: <span class="text-blue-500">1/2</span></li>
+                  <li>スタータスク: <span class="text-blue-500">0</span></li>
+                </ul>
+
+                <h3 class="font-bold text-gray-700 mt-4 border-t pt-4">
+                  29/08/2024:
+                </h3>
+                <ul class="list-disc pl-5">
+                  <li>完了タスク: <span class="text-blue-500">2/3</span></li>
+                  <li>スタータスク: <span class="text-blue-500">1</span></li>
+                </ul>
               </div>
             </div>
         </div>

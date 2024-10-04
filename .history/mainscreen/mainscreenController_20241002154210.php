@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    // Xử lý cập nhật trạng thái 'star' của task
+// Xử lý cập nhật trạng thái 'star' của task
 if (isset($_POST['task_id']) && isset($_POST['star'])) {
     $task_id = intval($_POST['task_id']);
     $star = intval($_POST['star']);
@@ -190,31 +190,6 @@ if ($result->num_rows > 0) {
     }
 } else {
     $tasks_by_date = []; // Không có dữ liệu
-}
-
-
-// Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
-$sql = "SELECT time_start, 
-               COUNT(CASE WHEN checked = 1 THEN 1 END) AS completed_tasks, 
-               COUNT(CASE WHEN star = 1 THEN 1 END) AS starred_tasks 
-        FROM task
-        GROUP BY time_start
-        ORDER BY time_start ASC";
-        
-$result = $conn->query($sql);
-
-$task_summary = [];
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $date = date('Y-m-d', strtotime($row['time_start']));
-        $task_summary[$date] = [
-            'completed_tasks' => $row['completed_tasks'],
-            'starred_tasks' => $row['starred_tasks']
-        ];
-    }
-} else {
-    $task_summary = []; // Không có dữ liệu
 }
 
 // Đóng kết nối

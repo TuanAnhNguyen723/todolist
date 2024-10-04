@@ -42,113 +42,108 @@ include '../mainscreen/mainscreenController.php';
     <main class="container mx-auto mt-8">
       <div class="flex justify-between">
         <!-- Task List -->
-        <div class="w-full bg-white p-4 shadow rounded-lg">
-          <div class="flex justify-between items-center mb-4">
-            <!-- Task List Title -->
-            <h2 class="text-xl font-bold">タスク一覧</h2>
+        <div class="w-2/3 bg-white p-4 shadow rounded-lg">
+  <div class="flex justify-between items-center mb-4">
+    <!-- Task List Title -->
+    <h2 class="text-xl font-bold">タスク一覧</h2>
 
-            <div class="flex items-center space-x-4">
-              <!-- Filter Icon -->
-              <button class="text-blue-500 hover:text-gray-700">
-                <i class="fas fa-sliders-h"></i>
-              </button>
+    <div class="flex items-center space-x-4">
+      <!-- Filter Icon -->
+      <button class="text-blue-500 hover:text-gray-700">
+        <i class="fas fa-sliders-h"></i>
+      </button>
 
-              <!-- Search Input with Icon -->
-              <div class="relative">
-                <input
-                  type="text"
-                  class="border rounded-lg pl-10 pr-3 py-2 w-64"
-                  placeholder="タスクを入力してください"
-                />
-                <!-- Search Icon -->
-                <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
-              </div>
+      <!-- Search Input with Icon -->
+      <div class="relative">
+        <input
+          type="text"
+          class="border rounded-lg pl-10 pr-3 py-2 w-64"
+          placeholder="タスクを入力してください"
+        />
+        <!-- Search Icon -->
+        <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
+      </div>
 
-              <!-- New Task Button -->
-              <button class="newtask bg-blue-500 text-white px-4 py-2 rounded-lg">
-                + 新規作成
-              </button>
-            </div>
-          </div>
+      <!-- New Task Button -->
+      <button class="newtask bg-blue-500 text-white px-4 py-2 rounded-lg">
+        + 新規作成
+      </button>
+    </div>
+  </div>
 
-        <!-- Tạo một khối Flex cho task list và task summary -->
-        <div class="flex justify-between border-t-black border-t-2 pt-4 ">
-          <!-- Task List -->
-          <div class="w-2/3">
-            <!-- Task Groups by Date -->
-            <div class="task-container">
-              <?php foreach ($tasks_by_date as $date => $tasks): ?>
-                <div class="mb-4 border-b border-b-black pt-4">
-                  <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
+  <!-- Sử dụng flex để căn chỉnh -->
+  <div class="flex space-x-4">
+    <!-- Task List -->
+    <div class="w-2/3">
+      <!-- Task Groups by Date -->
+      <div class="task-container">
+        <?php foreach ($tasks_by_date as $date => $tasks): ?>
+          <div class="mb-4 border-b pt-4">
+            <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
 
-                  <?php foreach ($tasks as $task): ?>
-                    <div class="task-container2 flex justify-between items-center space-x-4 my-2">
-                      <div class="flex items-center space-x-4">
-                        <input
-                          type="checkbox"
-                          class="form-checkbox h-5 w-5 toggle-complete <?php echo $task['star'] ? 'accent-yellow-500' : ''; ?>"
-                          data-task-id="<?php echo $task['task_id']; ?>"
-                          <?php echo $task['checked'] ? 'checked' : ''; ?>
-                        />
-                        <span class="task-text <?php echo $task['checked'] ? 'line-through text-gray-400' : ''; ?> <?php echo $task['star'] ? 'text-yellow-500' : ''; ?>">
-                          <?php echo htmlspecialchars($task['title']); ?>
-                        </span>
-                      </div>
-                      <div class="flex space-x-2">
-                        <!-- Nút xem chi tiết -->
-                        <button class="text-blue-500 hover:text-blue-700">
-                          <i class="fa fa-eye"></i>
-                        </button>
-
-                        <!-- Nút sửa -->
-                        <button class="text-gray-500 hover:text-gray-700 edit-task-button" data-task-id="<?php echo $task['task_id']; ?>">
-                          <i class="fa fa-pencil"></i>
-                        </button>
-
-                        <!-- Nút xóa -->
-                        <form action="./mainscreenController.php" method="POST" style="display:inline;">
-                          <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
-                          <button type="submit" name="delete_task" class="text-red-500 hover:text-red-700">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </form>
-
-                        <!-- // Kết hợp trạng thái star -->
-                        <button class="text-gray-500 hover:text-yellow-300 star-icon <?php echo $task['star'] ? 'text-yellow-300' : ''; ?>" data-task-id="<?php echo $task['task_id']; ?>">
-                          <i class="fa fa-star"></i>
-                        </button>
-                      </div>
-                    </div>
-                  <?php endforeach; ?>
+            <?php foreach ($tasks as $task): ?>
+              <div class="task-container2 flex justify-between items-center space-x-4 my-2">
+                <div class="flex items-center space-x-4">
+                  <input
+                    type="checkbox"
+                    class="form-checkbox h-5 w-5 toggle-complete <?php echo $task['star'] ? 'accent-yellow-500' : ''; ?>"
+                    data-task-id="<?php echo $task['task_id']; ?>"
+                    <?php echo $task['checked'] ? 'checked' : ''; ?>
+                  />
+                  <span class="task-text <?php echo $task['checked'] ? 'line-through text-gray-400' : ''; ?> <?php echo $task['star'] ? 'text-yellow-500' : ''; ?>">
+                    <?php echo htmlspecialchars($task['title']); ?>
+                  </span>
                 </div>
-              <?php endforeach; ?>
-            </div>
-          </div>
+                <div class="flex space-x-2">
+                  <!-- Nút xem chi tiết -->
+                  <button class="text-blue-500 hover:text-blue-700">
+                    <i class="fa fa-eye"></i>
+                  </button>
 
-              <!-- Task Completion Summary -->
-              <div id="task-summary" class="w-1/3 bg-grey-900 p-6 rounded-lg shadow-lg ml-4 bg-neutral-100 border-2">
-                <?php if (!empty($task_summary)): ?>
-                    <?php foreach ($task_summary as $date => $summary): ?>
-                        <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?>:</h3>
-                        <ul class="list-disc pl-5">
-                            <li>完了タスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['completed_tasks']); ?>
-                                </span>
-                            </li>
-                            <li>スタータスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['starred_tasks']); ?>
-                                </span>
-                            </li>
-                        </ul>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>データがありません。</p>
-                <?php endif; ?>
+                  <!-- Nút sửa -->
+                  <button class="text-gray-500 hover:text-gray-700 edit-task-button" data-task-id="<?php echo $task['task_id']; ?>">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+
+                  <!-- Nút xóa -->
+                  <form action="./mainscreenController.php" method="POST" style="display:inline;">
+                    <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+                    <button type="submit" name="delete_task" class="text-red-500 hover:text-red-700">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </form>
+
+                  <!-- Kết hợp trạng thái star -->
+                  <button class="text-gray-500 hover:text-yellow-300 star-icon <?php echo $task['star'] ? 'text-yellow-300' : ''; ?>" data-task-id="<?php echo $task['task_id']; ?>">
+                    <i class="fa fa-star"></i>
+                  </button>
+                </div>
               </div>
-            </div>
-        </div>
+            <?php endforeach; ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+    <!-- Task Completion Summary -->
+    <div id="task-summary" class="w-1/3 bg-white p-6 rounded-lg shadow-lg">
+      <h3 class="font-bold text-gray-700">28/08/2024:</h3>
+      <ul class="list-disc pl-5">
+        <li>完了タスク: <span class="text-blue-500">1/2</span></li>
+        <li>スタータスク: <span class="text-blue-500">0</span></li>
+      </ul>
+
+      <h3 class="font-bold text-gray-700 mt-4 border-t pt-4">
+        29/08/2024:
+      </h3>
+      <ul class="list-disc pl-5">
+        <li>完了タスク: <span class="text-blue-500">2/3</span></li>
+        <li>スタータスク: <span class="text-blue-500">1</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 
 
         <!-- Task Add Modal -->

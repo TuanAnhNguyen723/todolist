@@ -127,26 +127,15 @@ include '../mainscreen/mainscreenController.php';
 
               <!-- Task Completion Summary -->
               <div id="task-summary" class="w-1/3 bg-grey-900 p-6 rounded-lg shadow-lg ml-4 bg-neutral-100 border-2">
-                <?php if (!empty($task_summary)): ?>
-                    <?php foreach ($task_summary as $date => $summary): ?>
-                        <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?>:</h3>
-                        <ul class="list-disc pl-5">
-                            <li>完了タスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['completed_tasks']); ?>
-                                </span>
-                            </li>
-                            <li>スタータスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['starred_tasks']); ?>
-                                </span>
-                            </li>
-                        </ul>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>データがありません。</p>
-                <?php endif; ?>
+                <?php foreach ($tasks_summary as $summary): ?>
+                  <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($summary['task_date']); ?>:</h3>
+                  <ul class="list-disc pl-5">
+                    <li>完了タスク: <span class="text-blue-500"><?php echo htmlspecialchars($summary['completed_tasks']); ?>/<?php echo htmlspecialchars($summary['total_tasks']); ?></span></li>
+                    <li>スタータスク: <span class="text-blue-500"><?php echo htmlspecialchars($summary['starred_tasks']); ?></span></li>
+                  </ul>
+                <?php endforeach; ?>
               </div>
+
             </div>
         </div>
 

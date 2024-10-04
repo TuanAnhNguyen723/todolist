@@ -127,25 +127,19 @@ include '../mainscreen/mainscreenController.php';
 
               <!-- Task Completion Summary -->
               <div id="task-summary" class="w-1/3 bg-grey-900 p-6 rounded-lg shadow-lg ml-4 bg-neutral-100 border-2">
-                <?php if (!empty($task_summary)): ?>
-                    <?php foreach ($task_summary as $date => $summary): ?>
-                        <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?>:</h3>
-                        <ul class="list-disc pl-5">
-                            <li>完了タスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['completed_tasks']); ?>
-                                </span>
-                            </li>
-                            <li>スタータスク: 
-                                <span class="text-blue-500">
-                                    <?php echo htmlspecialchars($summary['starred_tasks']); ?>
-                                </span>
-                            </li>
-                        </ul>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>データがありません。</p>
-                <?php endif; ?>
+                <h3 class="font-bold text-gray-700">28/08/2024:</h3>
+                <ul class="list-disc pl-5">
+                  <li>完了タスク: <span class="text-blue-500">1/2</span></li>
+                  <li>スタータスク: <span class="text-blue-500">0</span></li>
+                </ul>
+
+                <h3 class="font-bold text-gray-700 mt-4 border-t border-t-black pt-4">
+                  29/08/2024:
+                </h3>
+                <ul class="list-disc pl-5">
+                  <li>完了タスク: <span class="text-blue-500">2/3</span></li>
+                  <li>スタータスク: <span class="text-blue-500">1</span></li>
+                </ul>
               </div>
             </div>
         </div>

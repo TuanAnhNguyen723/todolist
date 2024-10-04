@@ -108,18 +108,12 @@ document.querySelectorAll(".star-icon").forEach((starIcon) => {
     // Xác định trạng thái "star" dựa trên việc icon có chứa class "text-yellow-300" hay không
     const isStarred = this.classList.contains("text-yellow-300") ? 1 : 0;
 
-    // Tìm task container cụ thể chứa các thông tin khác như .task-text và .form-checkbox
-    const taskContainer = this.closest(".task-container2");
+    // Tìm task container chứa các thông tin khác như .task-text và .form-checkbox
+    const taskContainer = this.closest(".concac");
 
-    // Nếu không tìm thấy taskContainer, log ra lỗi
-    if (!taskContainer) {
-      console.error("Không tìm thấy .task-container2 cho task_id:", taskId);
-      return;
-    }
-
-    // Tìm các phần tử .task-text và .form-checkbox trong task container
-    const taskText = taskContainer.querySelector(".task-text");
-    const checkbox = taskContainer.querySelector(".form-checkbox");
+    // Kiểm tra nếu tìm thấy các phần tử liên quan
+    const taskText = taskContainer.querySelectorAll(".task-text");
+    const checkbox = taskContainer.querySelectorAll(".form-checkbox");
 
     // Kiểm tra xem taskText và checkbox có tồn tại không
     console.log("Task Text Element:", taskText);
@@ -129,13 +123,13 @@ document.querySelectorAll(".star-icon").forEach((starIcon) => {
     if (taskText && checkbox) {
       if (isStarred) {
         taskText.classList.add("text-yellow-500");
-        checkbox.classList.add("accent-yellow-500");
+        checkbox.classList.add("bg-yellow-500", "border-yellow-500");
       } else {
         taskText.classList.remove("text-yellow-500");
-        checkbox.classList.remove("accent-yellow-500");
+        checkbox.classList.remove("bg-yellow-500", "border-yellow-500");
       }
     } else {
-      console.error("Không tìm thấy .task-text hoặc .form-checkbox trong .task-container!");
+      console.error("Không tìm thấy .task-text hoặc .form-checkbox!");
     }
 
     // Cập nhật trạng thái "star" vào cơ sở dữ liệu qua AJAX
@@ -319,26 +313,3 @@ document.querySelectorAll(".star-icon").forEach((starIcon) => {
     });
   });
 });
-
-// Hàm format date để hiển thị theo yyyy/mm/dd
-function formatDateToYMD(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = ('0' + (date.getMonth() + 1)).slice(-2); // Lấy tháng và đảm bảo có 2 chữ số
-  const day = ('0' + date.getDate()).slice(-2); // Lấy ngày và đảm bảo có 2 chữ số
-  return `${year}/${month}/${day}`;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Giả sử dữ liệu này được trả về từ server
-  fetch(`mainscreenController.php?task_id=1`)
-  .then((response) => response.json())
-  .then((task) => {
-      if (task.task_id) {
-          // Format các giá trị ngày từ server sang yyyy/mm/dd
-          document.querySelector("input[name='edit_time_start']").value = formatDateToYMD(task.time_start);
-          document.querySelector("input[name='edit_time_end']").value = formatDateToYMD(task.time_end);
-      }
-  });
-});
-
