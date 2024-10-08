@@ -35,7 +35,14 @@ include '../mainscreen/mainscreenController.php';
     <!-- Header Section -->
     <header class="bg-white shadow p-4 flex justify-between items-center">
       <div class="flex items-center">
+            
+  <h1>Thông tin sinh viên</h1>
 
+  <div>Họ Và Tên: Dinh Trong Viet Phu</div>
+
+  <div>MSSV: 21012321</div>
+
+  <div>Lớp: CNTTVJ2</div>
 
       <div></div>
 

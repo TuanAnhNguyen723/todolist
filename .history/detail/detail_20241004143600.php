@@ -136,8 +136,7 @@ include './detailController.php';
                 value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_start']))); ?>" 
                 required=""
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
           <div class="flex items-center">
@@ -151,8 +150,7 @@ include './detailController.php';
                 value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_end']))); ?>" 
                 required=""
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
         </div>

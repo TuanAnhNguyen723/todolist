@@ -29,16 +29,10 @@ include '../mainscreen/mainscreenController.php';
 
 
   </head>
-  
   <body class="bg-gray-50">
-
     <!-- Header Section -->
     <header class="bg-white shadow p-4 flex justify-between items-center">
       <div class="flex items-center">
-
-
-      <div></div>
-
       <h1 class="text-3xl font-bold text-blue-500">
           <span class="text-5xl text-blue-800">G</span>etItDone
       </h1>
@@ -189,15 +183,13 @@ include '../mainscreen/mainscreenController.php';
                 <!-- Date Pickers -->
                 <div class="flex justify-between space-x-4 mb-4">
                   <div class="w-1/2 relative">
-                    <label for="time_start" class="sr-only">開始日</label>
+                    <label for="time_start" class="sr-only">Start Date</label>
                     <input
                       type="text"
                       name="time_start"
                       class="w-full border border-gray-300 p-2 rounded-lg"
                       placeholder="yyyy-mm-dd"
                     />
-                    <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                   </div>
                   <div class="w-1/2 relative">
                     <label for="time_end" class="sr-only">End Date</label>
@@ -207,8 +199,6 @@ include '../mainscreen/mainscreenController.php';
                       class="w-full border border-gray-300 p-2 rounded-lg"
                       placeholder="yyyy-mm-dd"
                     />
-                    <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                   </div>
                 </div>
 
@@ -346,10 +336,8 @@ include '../mainscreen/mainscreenController.php';
                     type="text" 
                     name="edit_time_start" 
                     class="edit-time-start w-full border border-gray-300 p-2 rounded-lg" 
-                    placeholder="yyyy-mm-dd" 
+                    placeholder="yyyy-mm-dd"
                 />
-                <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               </div>
               <div class="w-1/2 relative">
                 <label for="edit_time_end" class="sr-only">End Date</label>
@@ -359,8 +347,6 @@ include '../mainscreen/mainscreenController.php';
                     class="edit-time-end w-full border border-gray-300 p-2 rounded-lg" 
                     placeholder="yyyy-mm-dd"
                 />
-                <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               </div>
             </div>
 

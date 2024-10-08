@@ -45,7 +45,7 @@ function toggleTaskStatus(taskId) {
 
   // Gửi AJAX để cập nhật trạng thái trong database
   const newStatus = isCompleted ? 0 : 1; // 1 là hoàn thành, 0 là chưa hoàn thành
-  fetch("../mainscreen/mainscreenController.php", {
+  fetch("mainscreenController.php", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: `task_id=${taskId}&checked=${newStatus}`,
@@ -56,19 +56,3 @@ function toggleTaskStatus(taskId) {
     })
     .catch((error) => console.error("Lỗi khi cập nhật trạng thái:", error));
 }
-
-function convertToYYYYMMDD(dateStr) {
-  // Giả sử đầu vào là 'dd/mm/yyyy'
-  const [day, month, year] = dateStr.split("/"); 
-  return `${year}-${month}-${day}`; // Chuyển đổi thành định dạng 'yyyy/mm/dd'
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-  // Khởi tạo Flatpickr cho các trường ngày
-  flatpickr("#startDateInput", {
-    dateFormat: "Y/m/d" // Định dạng ngày yyyy/mm/dd
-  });
-  flatpickr("#endDateInput", {
-    dateFormat: "Y/m/d" // Định dạng ngày yyyy/mm/dd
-  });
-});

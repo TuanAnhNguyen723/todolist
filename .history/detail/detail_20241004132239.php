@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-
-<?php
-include './detailController.php';
-?>
-
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
@@ -14,10 +9,6 @@ include './detailController.php';
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
     <style>
       /* Ẩn icon mặc định của input date */
       input[type="date"]::-webkit-calendar-picker-indicator {
@@ -49,35 +40,13 @@ include './detailController.php';
       #titleInput {
         display: none;
       }
-
-
-/* Màu cho trạng thái hoàn thành (完了) */
-#taskStatus.completed {
-  background-color: #00aaff;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-/* Màu cho trạng thái chưa hoàn thành (未完了) */
-#taskStatus.not-completed {
-  background-color: #ff4b4b;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-}
-
     </style>
   </head>
   <body class="bg-gray-100 font-sans">
     <!-- Header -->
     <header class="bg-white shadow p-4">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <h1 class="text-3xl font-bold text-blue-500">
-          <span class="text-5xl text-blue-800">G</span>etItDone
-      </h1>
+        <h1 class="text-2xl font-bold text-blue-600">GetItDone</h1>
         <div class="flex items-center">
           <span class="text-gray-700">KietCT</span>
           <span class="text-sm text-gray-500 ml-2">(Admin)</span>
@@ -86,40 +55,33 @@ include './detailController.php';
     </header>
 
     <!-- Task Details -->
-    <div class="max-w-5xl mx-auto mt-6 p-8 bg-white shadow rounded-md">
+    <div class="max-w-3xl mx-auto mt-6 p-6 bg-white shadow rounded-md">
       <h2 class="text-xl font-bold mb-4">タスク詳細</h2>
 
       <div class="border-t pt-4">
-
-<form id="taskDetailForm" action="detail.php?task_id=<?php echo $task['task_id']; ?>" method="POST">
-        <!-- Gửi task_id để biết nhiệm vụ nào cần được cập nhật -->
-        <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
         <!-- Title and Status -->
         <div class="mb-6">
           <div class="mt-2">
-            <span class="font-bold text-xl" id="titleText" ondblclick="editTitle()">
-              <?php echo htmlspecialchars(string: $task['title']); // Hiển thị title ?>
+            <span class="font-bold" id="titleText" ondblclick="editTitle()">
+              <?php echo htmlspecialchars($task['title']); // Hiển thị title ?>
             </span>
             <input
               type="text"
-              name="title"
               id="titleInput"
               class="border border-gray-300 rounded-md p-2"
-              value="<?php echo htmlspecialchars($task['title']); ?>" 
+              value="<?php echo htmlspecialchars($task['title']); ?>" <!-- Gán giá trị vào input -->
               onblur="saveTitle()"
             />
           </div>
           <div class="flex items-center space-x-2 mt-2">
             <label class="inline-flex items-center">
-              <div class="w-50 pr-16">スタータスク</div>
-              <span 
-                id="taskStatus" 
-                class="task-status <?php echo $task['checked'] ? 'completed' : 'not-completed'; ?>" 
-                onclick="toggleTaskStatus(<?php echo $task['task_id']; ?>)">
-                <!-- Hiển thị trạng thái -->
-                <?php echo $task['checked'] ? '完了' : '未完了'; ?>
-              </span>
+              <i class="fa-regular fa-circle-check text-blue-600 text-xl"></i>
+              <span class="ml-2">ステータス</span>
             </label>
+            <!-- Nếu task đã hoàn thành thì hiển thị '完了', nếu chưa thì hiển thị '未完了' -->
+            <span class="text-red-500 font-bold text-sm px-2 py-1 rounded bg-red-100">
+              <?php echo $task['checked'] ? '完了' : '未完了'; ?>
+            </span>
           </div>
         </div>
 
@@ -128,31 +90,29 @@ include './detailController.php';
           <div class="flex items-center">
             <div style="width: 20%">開始日</div>
             <div class="date-container">
-            <input
-                type="text" 
+              <input
+                type="date"
                 class="form-control shadow-none"
-                name="time_start"
+                name="checkin"
                 id="startDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_start']))); ?>" 
                 required=""
+                value="<?php echo htmlspecialchars($task['time_start']); ?>" <!-- Hiển thị time_start -->
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
           <div class="flex items-center">
             <div style="width: 20%">締め切り</div>
             <div class="date-container">
-            <input
-                type="text"
+              <input
+                type="date"
                 class="form-control shadow-none"
-                name="time_end"
+                name="checkin"
                 id="endDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_end']))); ?>" 
                 required=""
+                value="<?php echo htmlspecialchars($task['time_end']); ?>" <!-- Hiển thị time_end -->
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
         </div>
@@ -164,7 +124,6 @@ include './detailController.php';
           </label>
           <textarea
             id="description"
-            name="description"
             class="w-full h-24 mt-2 p-2 border border-gray-300 rounded-md"
             placeholder="デスクリプションを入力してください"
           ><?php echo htmlspecialchars($task['description']); ?></textarea> <!-- Hiển thị description -->
@@ -181,11 +140,27 @@ include './detailController.php';
             保存
           </button>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
 
-    <script src="./detail.js"></script>
+    <script>
+      function editTitle() {
+        const text = document.getElementById("titleText").textContent;
+        const input = document.getElementById("titleInput");
+        input.value = text; // Gán giá trị tiêu đề hiện tại vào input
+        document.getElementById("titleText").style.display = "none";
+        input.style.display = "inline-block";
+        input.focus();
+      }
+
+      function saveTitle() {
+        const input = document.getElementById("titleInput");
+        const text = document.getElementById("titleText");
+        text.textContent = input.value; // Cập nhật giá trị sau khi chỉnh sửa
+        input.style.display = "none";
+        text.style.display = "inline";
+      }
+    </script>
 
   </body>
 </html>

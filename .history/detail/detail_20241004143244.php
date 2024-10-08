@@ -14,10 +14,6 @@ include './detailController.php';
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
     <style>
       /* Ẩn icon mặc định của input date */
       input[type="date"]::-webkit-calendar-picker-indicator {
@@ -129,30 +125,28 @@ include './detailController.php';
             <div style="width: 20%">開始日</div>
             <div class="date-container">
             <input
-                type="text" 
+                type="date"
                 class="form-control shadow-none"
                 name="time_start"
                 id="startDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_start']))); ?>" 
+                value="<?php echo date("Y-m-d", strtotime($task['time_start'])); ?>" 
                 required=""
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
           <div class="flex items-center">
             <div style="width: 20%">締め切り</div>
             <div class="date-container">
-            <input
-                type="text"
-                class="form-control shadow-none"
-                name="time_end"
-                id="endDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_end']))); ?>" 
-                required=""
-              />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input
+                  type="date"
+                  class="form-control shadow-none"
+                  name="time_end"
+                  id="endDateInput"
+                  value="<?php echo date("Y-m-d", strtotime($task['time_end'])); ?>" 
+                  required=""
+                />
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
         </div>

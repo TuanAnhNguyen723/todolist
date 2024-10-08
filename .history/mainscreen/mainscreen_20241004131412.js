@@ -323,16 +323,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Sự kiện: Xem chi tiết task khi nhấn vào icon "mắt"
   document.querySelectorAll(".fa-eye").forEach((eyeIcon) => {
     eyeIcon.addEventListener("click", function () {
-      // Lấy task_id từ phần tử cha chứa icon mắt
-      const taskContainer = this.closest(".task-container2"); // Tìm container của task
-      const taskId = taskContainer.querySelector("input.form-checkbox").getAttribute("data-task-id"); // Lấy task_id từ checkbox
-  
-      console.log("Task ID clicked:", taskId); // In ra task_id của task được click vào
-  
-      // Nếu bạn muốn điều hướng sang trang chi tiết hoặc làm gì đó với task_id
-      viewTaskDetails(taskId); // Hàm điều hướng có thể được gọi ở đây
+      const taskId = this.closest(".task-container").querySelector(
+        "input[name='task_id']"
+      ).value;
+      viewTaskDetails(taskId);
     });
   });
+});
 
 // Hàm format date để hiển thị theo yyyy/mm/dd
 function formatDateToYMD(dateString) {
@@ -343,38 +340,17 @@ function formatDateToYMD(dateString) {
   return `${year}/${month}/${day}`;
 }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Giả sử dữ liệu này được trả về từ server
-    fetch(`mainscreenController.php?task_id=1`)
-      .then((response) => response.json())
-      .then((task) => {
-        if (task.task_id) {
-          // Format các giá trị ngày từ server sang yyyy/mm/dd
-          document.querySelector("input[name='edit_time_start']").value =
-            formatDateToYMD(task.time_start);
-          document.querySelector("input[name='edit_time_end']").value =
-            formatDateToYMD(task.time_end);
-        }
-      });
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  // Giả sử dữ liệu này được trả về từ server
+  fetch(`mainscreenController.php?task_id=1`)
+    .then((response) => response.json())
+    .then((task) => {
+      if (task.task_id) {
+        // Format các giá trị ngày từ server sang yyyy/mm/dd
+        document.querySelector("input[name='edit_time_start']").value =
+          formatDateToYMD(task.time_start);
+        document.querySelector("input[name='edit_time_end']").value =
+          formatDateToYMD(task.time_end);
+      }
+    });
 });
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Khởi tạo Flatpickr cho modal thêm task (Add Task Modal)
-  flatpickr("input[name='time_start']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-  flatpickr("input[name='time_end']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-
-  // Khởi tạo Flatpickr cho modal chỉnh sửa task (Edit Task Modal)
-  flatpickr("input[name='edit_time_start']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-  flatpickr("input[name='edit_time_end']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-});
-

@@ -14,10 +14,6 @@ include './detailController.php';
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
     <style>
       /* Ẩn icon mặc định của input date */
       input[type="date"]::-webkit-calendar-picker-indicator {
@@ -111,7 +107,7 @@ include './detailController.php';
           </div>
           <div class="flex items-center space-x-2 mt-2">
             <label class="inline-flex items-center">
-              <div class="w-50 pr-16">スタータスク</div>
+              <div style="padding-right: 25px">スタータスク</div>
               <span 
                 id="taskStatus" 
                 class="task-status <?php echo $task['checked'] ? 'completed' : 'not-completed'; ?>" 
@@ -128,31 +124,30 @@ include './detailController.php';
           <div class="flex items-center">
             <div style="width: 20%">開始日</div>
             <div class="date-container">
-            <input
-                type="text" 
+              <input
+                type="date"
                 class="form-control shadow-none"
                 name="time_start"
+                name="checkin"
                 id="startDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_start']))); ?>" 
                 required=""
+                value="<?php echo htmlspecialchars($task['time_start']); ?>" 
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
           <div class="flex items-center">
             <div style="width: 20%">締め切り</div>
             <div class="date-container">
-            <input
-                type="text"
+              <input
+                type="date"
                 class="form-control shadow-none"
-                name="time_end"
+                name="checkin"
                 id="endDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_end']))); ?>" 
                 required=""
+                value="<?php echo htmlspecialchars($task['time_end']); ?>" 
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
         </div>
@@ -164,7 +159,6 @@ include './detailController.php';
           </label>
           <textarea
             id="description"
-            name="description"
             class="w-full h-24 mt-2 p-2 border border-gray-300 rounded-md"
             placeholder="デスクリプションを入力してください"
           ><?php echo htmlspecialchars($task['description']); ?></textarea> <!-- Hiển thị description -->

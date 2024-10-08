@@ -129,30 +129,28 @@ include './detailController.php';
             <div style="width: 20%">開始日</div>
             <div class="date-container">
             <input
-                type="text" 
+                type="date"
                 class="form-control shadow-none"
                 name="time_start"
                 id="startDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_start']))); ?>" 
+                value="<?php echo date("Y-m-d", strtotime($task['time_start'])); ?>" 
                 required=""
               />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
           <div class="flex items-center">
             <div style="width: 20%">締め切り</div>
             <div class="date-container">
-            <input
-                type="text"
-                class="form-control shadow-none"
-                name="time_end"
-                id="endDateInput"
-                value="<?php echo htmlspecialchars(date("Y-m-d", strtotime($task['time_end']))); ?>" 
-                required=""
-              />
-              <!-- Icon -->
-              <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input
+                  type="date"
+                  class="form-control shadow-none"
+                  name="time_end"
+                  id="endDateInput"
+                  value="<?php echo date("Y-m-d", strtotime($task['time_end'])); ?>" 
+                  required=""
+                />
+              <i class="fas fa-calendar-alt"></i>
             </div>
           </div>
         </div>

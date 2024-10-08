@@ -29,16 +29,10 @@ include '../mainscreen/mainscreenController.php';
 
 
   </head>
-  
   <body class="bg-gray-50">
-
     <!-- Header Section -->
     <header class="bg-white shadow p-4 flex justify-between items-center">
       <div class="flex items-center">
-
-
-      <div></div>
-
       <h1 class="text-3xl font-bold text-blue-500">
           <span class="text-5xl text-blue-800">G</span>etItDone
       </h1>

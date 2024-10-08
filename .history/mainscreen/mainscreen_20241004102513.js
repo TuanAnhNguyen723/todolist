@@ -2,28 +2,32 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".edit-task-button").forEach((editButton) => {
     editButton.addEventListener("click", function (event) {
       event.preventDefault();
-
+  
       const taskId = this.getAttribute("data-task-id");
-
+  
       console.log("Task ID clicked: ", taskId); // Kiểm tra task_id khi click
-
+  
       showTaskEditModal(taskId); // Hiển thị modal chỉnh sửa và tải dữ liệu từ server
     });
   });
 
   // Hàm để hiển thị modal chỉnh sửa với dữ liệu từ server
   function showTaskEditModal(taskId) {
+    // Ẩn form trong quá trình chờ dữ liệu
     document.querySelector("form").classList.add("hidden");
 
+    // Thêm timestamp để ngăn trình duyệt lưu cache
     const timestamp = new Date().getTime();
 
-    // Gửi yêu cầu lấy thông tin task từ server
+    // Gửi yêu cầu AJAX để lấy thông tin task từ server dựa trên task_id
     fetch(`mainscreenController.php?task_id=${taskId}&_=${timestamp}`)
       .then((response) => response.json())
       .then((task) => {
+        // Kiểm tra nếu task_id từ dữ liệu trả về khớp với task_id đã click
         if (task.task_id == taskId) {
-          console.log("Fetched task data: ", task);
+          console.log("Fetched task data: ", task); // Kiểm tra dữ liệu trả về từ server
 
+          // Điền thông tin của task vào modal
           document.querySelector("input[name='edit_task_id']").value =
             task.task_id;
           document.querySelector("input[name='edit_title']").value = task.title;
@@ -34,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
           document.querySelector("input[name='edit_time_end']").value =
             task.time_end;
 
+          // Hiển thị form và modal sau khi dữ liệu đã sẵn sàng
           document.querySelector("form").classList.remove("hidden");
           document.getElementById("taskEditModal").classList.remove("hidden");
         } else {
@@ -161,12 +166,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("taskEditModal").classList.add("hidden");
   }
 
-  // Hàm để lưu thay đổi task sau khi chỉnh sửa
+  // Lưu thay đổi task sau khi chỉnh sửa
   function saveTaskEdit(event) {
     event.preventDefault(); // Ngăn chặn hành vi mặc định của form
 
     // Lấy dữ liệu từ form chỉnh sửa
-    const taskId = document.querySelector("input[name='edit_task_id']").value; // Kiểm tra task_id có tồn tại không
+    const taskId = document.querySelector("input[name='edit_task_id']").value;
     const title = document.querySelector("input[name='edit_title']").value;
     const description = document.querySelector(
       "textarea[name='edit_description']"
@@ -177,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const timeEnd = document.querySelector("input[name='edit_time_end']").value;
 
     if (!taskId) {
-      // Nếu không có task_id, dừng lại vì đang thiếu ID
       console.error("Task ID is missing. Cannot update.");
       return;
     }
@@ -323,16 +327,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Sự kiện: Xem chi tiết task khi nhấn vào icon "mắt"
   document.querySelectorAll(".fa-eye").forEach((eyeIcon) => {
     eyeIcon.addEventListener("click", function () {
-      // Lấy task_id từ phần tử cha chứa icon mắt
-      const taskContainer = this.closest(".task-container2"); // Tìm container của task
-      const taskId = taskContainer.querySelector("input.form-checkbox").getAttribute("data-task-id"); // Lấy task_id từ checkbox
-  
-      console.log("Task ID clicked:", taskId); // In ra task_id của task được click vào
-  
-      // Nếu bạn muốn điều hướng sang trang chi tiết hoặc làm gì đó với task_id
-      viewTaskDetails(taskId); // Hàm điều hướng có thể được gọi ở đây
+      const taskId = this.closest(".task-container").querySelector(
+        "input[name='task_id']"
+      ).value;
+      viewTaskDetails(taskId);
     });
   });
+});
 
 // Hàm format date để hiển thị theo yyyy/mm/dd
 function formatDateToYMD(dateString) {
@@ -343,38 +344,17 @@ function formatDateToYMD(dateString) {
   return `${year}/${month}/${day}`;
 }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Giả sử dữ liệu này được trả về từ server
-    fetch(`mainscreenController.php?task_id=1`)
-      .then((response) => response.json())
-      .then((task) => {
-        if (task.task_id) {
-          // Format các giá trị ngày từ server sang yyyy/mm/dd
-          document.querySelector("input[name='edit_time_start']").value =
-            formatDateToYMD(task.time_start);
-          document.querySelector("input[name='edit_time_end']").value =
-            formatDateToYMD(task.time_end);
-        }
-      });
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  // Giả sử dữ liệu này được trả về từ server
+  fetch(`mainscreenController.php?task_id=1`)
+    .then((response) => response.json())
+    .then((task) => {
+      if (task.task_id) {
+        // Format các giá trị ngày từ server sang yyyy/mm/dd
+        document.querySelector("input[name='edit_time_start']").value =
+          formatDateToYMD(task.time_start);
+        document.querySelector("input[name='edit_time_end']").value =
+          formatDateToYMD(task.time_end);
+      }
+    });
 });
-
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Khởi tạo Flatpickr cho modal thêm task (Add Task Modal)
-  flatpickr("input[name='time_start']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-  flatpickr("input[name='time_end']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-
-  // Khởi tạo Flatpickr cho modal chỉnh sửa task (Edit Task Modal)
-  flatpickr("input[name='edit_time_start']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-  flatpickr("input[name='edit_time_end']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-});
-

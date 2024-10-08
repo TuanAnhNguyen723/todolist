@@ -359,22 +359,12 @@ function formatDateToYMD(dateString) {
   });
 });
 
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Khởi tạo Flatpickr cho modal thêm task (Add Task Modal)
-  flatpickr("input[name='time_start']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
+document.addEventListener("DOMContentLoaded", function() {
+  // Khởi tạo Flatpickr cho các trường ngày
+  flatpickr("#startDateInput", {
+    dateFormat: "Y/m/d" // Định dạng ngày yyyy/mm/dd
   });
-  flatpickr("input[name='time_end']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-
-  // Khởi tạo Flatpickr cho modal chỉnh sửa task (Edit Task Modal)
-  flatpickr("input[name='edit_time_start']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
-  });
-  flatpickr("input[name='edit_time_end']", {
-    dateFormat: "Y-m-d", // Định dạng ngày là yyyy-mm-dd
+  flatpickr("#endDateInput", {
+    dateFormat: "Y/m/d" // Định dạng ngày yyyy/mm/dd
   });
 });
-

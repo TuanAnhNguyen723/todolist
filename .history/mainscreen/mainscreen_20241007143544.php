@@ -31,11 +31,13 @@ include '../mainscreen/mainscreenController.php';
   </head>
   
   <body class="bg-gray-50">
+    
+  <h1>Thông tin sinh viên</h1>
 
+<div>Họ Và Tên: Dinh Trong Viet Phu</div>
     <!-- Header Section -->
     <header class="bg-white shadow p-4 flex justify-between items-center">
       <div class="flex items-center">
-
 
       <div></div>
 

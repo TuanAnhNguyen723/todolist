@@ -21,24 +21,12 @@ include '../mainscreen/mainscreenController.php';
     <script src="./mainscreen.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Flatpickr CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<!-- Flatpickr JS -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
 
   </head>
-  
   <body class="bg-gray-50">
-
     <!-- Header Section -->
     <header class="bg-white shadow p-4 flex justify-between items-center">
       <div class="flex items-center">
-
-
-      <div></div>
-
       <h1 class="text-3xl font-bold text-blue-500">
           <span class="text-5xl text-blue-800">G</span>etItDone
       </h1>
@@ -142,13 +130,13 @@ include '../mainscreen/mainscreenController.php';
                   <?php if (!empty($task_summary)): ?>
                       <?php foreach ($task_summary as $date => $summary): ?>
                           <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?>:</h3>
-                          <ul class="list-disc pl-5 mb-4 border-b border-b-black pt-4">
+                          <ul class="list-disc pl-5 mb-6 border-b border-b-black pt-6">
                               <li>完了タスク: 
                                   <span class="text-blue-500">
                                       <?php echo htmlspecialchars($summary['completed_tasks']) . '/' . htmlspecialchars($summary['total_tasks']); ?>
                                   </span>
                               </li>
-                              <li class="pb-4" >スタータスク: 
+                              <li>スタータスク: 
                                   <span class="text-blue-500">
                                       <?php echo htmlspecialchars($summary['starred_tasks']) . '/' . htmlspecialchars($summary['total_tasks']); ?>
                                   </span>
@@ -189,26 +177,20 @@ include '../mainscreen/mainscreenController.php';
                 <!-- Date Pickers -->
                 <div class="flex justify-between space-x-4 mb-4">
                   <div class="w-1/2 relative">
-                    <label for="time_start" class="sr-only">開始日</label>
+                    <label for="time_start" class="sr-only">Start Date</label>
                     <input
-                      type="text"
+                      type="date"
                       name="time_start"
                       class="w-full border border-gray-300 p-2 rounded-lg"
-                      placeholder="yyyy-mm-dd"
                     />
-                    <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                   </div>
                   <div class="w-1/2 relative">
                     <label for="time_end" class="sr-only">End Date</label>
                     <input
-                      type="text"
+                      type="date"
                       name="time_end"
                       class="w-full border border-gray-300 p-2 rounded-lg"
-                      placeholder="yyyy-mm-dd"
                     />
-                    <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                   </div>
                 </div>
 
@@ -328,56 +310,43 @@ include '../mainscreen/mainscreenController.php';
               <i class="fas fa-times"></i>
             </button>
 
+
+
             <!-- Modal Content -->
             <h2 class="text-2xl font-bold mb-4">タスク編集</h2>
             <!-- Form -->
             <form id="editTaskForm" action="mainscreenController.php" method="POST">
-            <!-- Task ID (ẩn) để biết nhiệm vụ nào cần chỉnh sửa -->
-            <input type="hidden" name="edit_task_id" value="">
+              <!-- Task ID (ẩn) để biết nhiệm vụ nào cần chỉnh sửa -->
+              <input type="hidden" name="edit_task_id" value="">
 
-            <!-- Task Title -->
-            <input name="edit_title" type="text" placeholder="タイトルを入力してください" class="edit-title w-full border border-gray-300 p-2 rounded-lg mb-4" />
+              <!-- Task Title -->
+              <input name="edit_title" type="text" placeholder="タイトルを入力してください" class="edit-title w-full border border-gray-300 p-2 rounded-lg mb-4" />
 
-            <!-- Date Pickers -->
-            <div class="flex justify-between space-x-4 mb-4">
-              <div class="w-1/2 relative">
-                <label for="edit_time_start" class="sr-only">Start Date</label>
-                <input 
-                    type="text" 
-                    name="edit_time_start" 
-                    class="edit-time-start w-full border border-gray-300 p-2 rounded-lg" 
-                    placeholder="yyyy-mm-dd" 
-                />
-                <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+              <!-- Date Pickers -->
+              <div class="flex justify-between space-x-4 mb-4">
+                <div class="w-1/2 relative">
+                  <label for="edit_time_start" class="sr-only">Start Date</label>
+                  <input type="date" name="edit_time_start" class="edit-time-start w-full border border-gray-300 p-2 rounded-lg" />
+                </div>
+                <div class="w-1/2 relative">
+                  <label for="edit_time_end" class="sr-only">End Date</label>
+                  <input type="date" name="edit_time_end" class="edit-time-end w-full border border-gray-300 p-2 rounded-lg" />
+                </div>
               </div>
-              <div class="w-1/2 relative">
-                <label for="edit_time_end" class="sr-only">End Date</label>
-                <input 
-                    type="text" 
-                    name="edit_time_end" 
-                    class="edit-time-end w-full border border-gray-300 p-2 rounded-lg" 
-                    placeholder="yyyy-mm-dd"
-                />
-                <!-- Icon -->
-                <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+
+              <!-- Task Description -->
+              <textarea name="edit_description" placeholder="ディスクリプションを入力してください" class="edit-description w-full border border-gray-300 p-2 rounded-lg mb-4" rows="4"></textarea>
+
+              <!-- Buttons -->
+              <div class="flex justify-between">
+                <button id="saveEditButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full mr-2">
+                  保存
+                </button>
+                <button type="button" class="border border-blue-500 text-blue-500 px-4 py-2 rounded-lg w-full" id="cancelEditButton">
+                  キャンセル
+                </button>
               </div>
-            </div>
-
-            <!-- Task Description -->
-            <textarea name="edit_description" placeholder="ディスクリプションを入力してください" class="edit-description w-full border border-gray-300 p-2 rounded-lg mb-4" rows="4"></textarea>
-
-            <!-- Buttons -->
-            <div class="flex justify-between">
-              <button id="saveEditButton" class="bg-blue-500 text-white px-4 py-2 rounded-lg w-full mr-2">
-                保存
-              </button>
-              <button type="button" class="border border-blue-500 text-blue-500 px-4 py-2 rounded-lg w-full" id="cancelEditButton">
-                キャンセル
-              </button>
-            </div>
-          </form>
-
+            </form>
           </div>
         </div>
       </div>
