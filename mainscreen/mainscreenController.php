@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $sql = "UPDATE task SET checked = ? WHERE task_id = ?";
         $stmt = $conn->prepare($sql);
-        
+
         if ($stmt === false) {
             die('Lỗi chuẩn bị SQL: ' . $conn->error);
         }
@@ -48,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("i", $task_id);
 
         if ($stmt->execute()) {
-            echo "Nhiệm vụ đã được xóa thành công.";
+
         } else {
-            echo "Lỗi khi xóa nhiệm vụ.";
+           
         }
 
         $stmt->close();
@@ -112,29 +112,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Xử lý cập nhật trạng thái 'star' của task
-if (isset($_POST['task_id']) && isset($_POST['star'])) {
-    $task_id = intval($_POST['task_id']);
-    $star = intval($_POST['star']);
+    if (isset($_POST['task_id']) && isset($_POST['star'])) {
+        $task_id = intval($_POST['task_id']);
+        $star = intval($_POST['star']);
 
-    $sql = "UPDATE task SET star = ? WHERE task_id = ?";
-    $stmt = $conn->prepare($sql);
-    
-    if ($stmt === false) {
-        die('Lỗi chuẩn bị SQL: ' . $conn->error);
+        $sql = "UPDATE task SET star = ? WHERE task_id = ?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt === false) {
+            die('Lỗi chuẩn bị SQL: ' . $conn->error);
+        }
+
+        $stmt->bind_param("ii", $star, $task_id);
+
+        if ($stmt->execute()) {
+            echo "Trạng thái ngôi sao đã được cập nhật thành công.";
+        } else {
+            echo "Lỗi khi cập nhật trạng thái ngôi sao.";
+        }
+
+        $stmt->close();
+        $conn->close();
+        exit();
     }
-
-    $stmt->bind_param("ii", $star, $task_id);
-
-    if ($stmt->execute()) {
-        echo "Trạng thái ngôi sao đã được cập nhật thành công.";
-    } else {
-        echo "Lỗi khi cập nhật trạng thái ngôi sao.";
-    }
-
-    $stmt->close();
-    $conn->close();
-    exit();
-}
 
 }
 
@@ -168,14 +168,14 @@ if (isset($_GET['task_id'])) {
 
 
 // Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
-$sql = "SELECT * FROM task ORDER BY time_start ASC";
+$sql = "SELECT * FROM task ORDER BY time_end DESC";
 $result = $conn->query($sql);
 
 $tasks_by_date = [];
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $date = date('Y-m-d', strtotime($row['time_start']));
+        $date = date('Y-m-d', strtotime($row['time_end']));
         $tasks_by_date[$date][] = $row;
     }
 } else {
@@ -184,13 +184,13 @@ if ($result->num_rows > 0) {
 
 
 // Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
-$sql = "SELECT time_start, 
+$sql = "SELECT time_end, 
                COUNT(*) AS total_tasks, 
                COUNT(CASE WHEN checked = 1 THEN 1 END) AS completed_tasks, 
                COUNT(CASE WHEN star = 1 THEN 1 END) AS starred_tasks 
         FROM task
-        GROUP BY time_start
-        ORDER BY time_start ASC";
+        GROUP BY time_end
+        ORDER BY time_end DESC";
 
 $result = $conn->query($sql);
 
@@ -198,7 +198,7 @@ $task_summary = [];
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $date = date('Y-m-d', strtotime($row['time_start']));
+        $date = date('Y-m-d', strtotime($row['time_end']));
         $task_summary[$date] = [
             'total_tasks' => $row['total_tasks'],
             'completed_tasks' => $row['completed_tasks'],

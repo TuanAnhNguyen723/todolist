@@ -251,8 +251,8 @@ include '../mainscreen/mainscreenController.php';
             <h2 class="text-xl font-bold mb-4">フィルターオプション</h2>
 
             <!-- Status Dropdown -->
-            <div class="mb-4 relative">
-              <label class="block text-gray-700 font-semibold"
+            <div class="mb-4 relative ">
+              <label class="block text-gray-700 font-semibold pb-2"
                 >ステータス</label
               >
               <button
