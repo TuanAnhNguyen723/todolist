@@ -57,9 +57,9 @@ include '../mainscreen/mainscreenController.php';
         </h1>
       </div>
       <div class="flex items-center me-20">
-        <span class="text-black mr-4">
-          <p class="font-bold">KietCT</p>
-          <p class="text-xs text-gray-500">Admin</p>
+        <span class="text-black mr-4 text-xs font-medium">
+            <p class="">KietCT</p>
+            <p class="text-gray-500">Admin</p>
         </span>
         <i class="fa-solid fa-chevron-down text-blue-500"></i>
       </div>
@@ -81,7 +81,7 @@ include '../mainscreen/mainscreenController.php';
               </button>
 
               <!-- Filter Icon -->
-              <button class="text-blue-500 hover:text-gray-700 rotate-90">
+              <button class="text-blue-500 hover:text-gray-700 rotate-90 hidden">
                 <i class="fas fa-sliders-h"></i>
               </button>
 
@@ -89,8 +89,8 @@ include '../mainscreen/mainscreenController.php';
               <div class="relative">
                 <input
                   type="text"
-                  class="border rounded-lg pl-10 pr-3 py-2 w-64"
-                  placeholder="タスク名を入力してください"
+                  class="border rounded-lg pl-10 pr-3 py-2 w-72"
+                  placeholder="タスク名を検索してください"
                   id="searchInput"
                 />
                 <!-- Search Icon -->
@@ -117,7 +117,7 @@ include '../mainscreen/mainscreenController.php';
                     <?php echo htmlspecialchars($date); ?>
                   </h3>
                   <?php foreach ($tasks as $task): ?>
-                    <div class="task-container2 flex justify-between items-center space-x-4 my-2">
+                    <div class="task-container2 flex justify-between items-center space-x-4 my-2" id="task-<?php echo $task['task_id']; ?>">
                       <div class="flex items-center space-x-4">
                         <input
                           type="checkbox"
@@ -211,7 +211,7 @@ include '../mainscreen/mainscreenController.php';
                 <input
                   name="title"
                   type="text"
-                  placeholder="タイトルが入力してください"
+                  placeholder="タイトルを入力してください"
                   class="title w-full border border-gray-300 p-2 rounded-lg mb-4"
                 />
 
@@ -242,7 +242,7 @@ include '../mainscreen/mainscreenController.php';
                 <!-- Task Description -->
                 <textarea
                   name="description"
-                  placeholder="ディスクリプが入力してください"
+                  placeholder="ディスクリプを入力してください"
                   class="w-full border border-gray-300 p-2 rounded-lg mb-4"
                   rows="4"
                 ></textarea>

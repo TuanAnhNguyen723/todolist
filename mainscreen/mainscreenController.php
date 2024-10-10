@@ -104,10 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     header("Location: mainscreen.php?error=insert_failed");
                     exit();
                 }
-                $stmt->close();
             } else {
                 echo "Lỗi chuẩn bị SQL: " . $conn->error;
             }
+            $stmt->close();
         }
     }
 

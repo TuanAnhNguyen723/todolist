@@ -76,17 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Hàm để toggle ngôi sao (star) task
-  function toggleStar(starIcon) {
-    const taskText =
-      starIcon.parentElement.parentElement.querySelector(".task-text");
-    starIcon.classList.toggle("text-yellow-300");
+  // function toggleStar(starIcon) {
+  //   const taskText =
+  //     starIcon.parentElement.parentElement.querySelector(".task-text");
+  //   starIcon.classList.toggle("text-yellow-300");
 
-    if (starIcon.classList.contains("text-yellow-300")) {
-      taskText.classList.add("text-yellow-200");
-    } else {
-      taskText.classList.remove("text-yellow-200");
-    }
-  }
+  //   if (starIcon.classList.contains("text-yellow-300")) {
+  //     taskText.classList.add("text-yellow-200");
+  //   } else {
+  //     taskText.classList.remove("text-yellow-200");
+  //   }
+  // }
 
   // Sự kiện: Toggle trạng thái ngôi sao cho task
   document.querySelectorAll(".star-icon").forEach((starIcon) => {
@@ -403,4 +403,31 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// focus task in menu task
+document.getElementById("searchInput").addEventListener('keypress', function(e) {
+  if(e.key === 'Enter'){
+    e.preventDefault();
+
+    const searchValue = document.getElementById("searchInput").value;
+    console.log(searchValue.toLowerCase());
+    searchTask(searchValue.toLowerCase());
+  }
+})
+
+function searchTask(searchValue) {
+  const tasks = document.querySelectorAll('.task-container2');
+
+  tasks.forEach(task => {
+      const taskTitle = task.querySelector('.task-text').textContent.toLowerCase();
+      
+      if (searchValue) {
+          if (taskTitle.includes(searchValue)) {
+              task.classList.remove('hidden');
+          } else {
+              task.classList.add('hidden');
+          }
+      } 
+      else {
+          task.classList.remove('hidden');
+      }
+  });
+}
