@@ -70,7 +70,8 @@ include '../mainscreen/mainscreenController.php';
                 <input
                   type="text"
                   class="border rounded-lg pl-10 pr-3 py-2 w-64"
-                  placeholder="タスクを入力してください"
+                  placeholder="タスク名を入力してください"
+                  id="searchInput"
                 />
                 <!-- Search Icon -->
                 <i class="fas fa-search absolute left-3 top-3 text-gray-500"></i>
