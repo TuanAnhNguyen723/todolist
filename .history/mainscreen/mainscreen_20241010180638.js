@@ -404,7 +404,7 @@ $(document).ready(function () {
     var searchInput = $(this).val();
     $.ajax({
       method: "POST",
-      url: "search.php",
+      url: "mainscreenController.php",
       data: { title: searchInput },
       success: function (response) {
         $("#showdata").html(response);

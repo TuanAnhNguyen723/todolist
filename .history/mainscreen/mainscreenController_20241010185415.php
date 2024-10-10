@@ -198,7 +198,7 @@ $task_summary = [];
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $date = date('Y-m-d', strtotime($row['time_end']));
+        $date = date('Y-m-d', strtotime($row['time_start']));
         $task_summary[$date] = [
             'total_tasks' => $row['total_tasks'],
             'completed_tasks' => $row['completed_tasks'],

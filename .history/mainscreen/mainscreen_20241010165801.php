@@ -89,9 +89,9 @@ include '../mainscreen/mainscreenController.php';
           <!-- Task List -->
           <div class="w-2/3">
             <!-- Task Groups by Date -->
-            <div class="task-container" id="showdata">
+            <div class="task-container">
               <?php foreach ($tasks_by_date as $date => $tasks): ?>
-                <div class="mb-4 border-b border-b-black pt-4" >
+                <div class="mb-4 border-b border-b-black pt-4">
                   <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
 
                   <?php foreach ($tasks as $task): ?>
@@ -103,7 +103,7 @@ include '../mainscreen/mainscreenController.php';
                           data-task-id="<?php echo $task['task_id']; ?>"
                           <?php echo $task['checked'] ? 'checked' : ''; ?>
                         />
-                        <span  class="task-text <?php echo $task['checked'] ? 'line-through text-gray-400' : ''; ?> <?php echo $task['star'] ? 'text-yellow-500' : ''; ?>">
+                        <span id="showdata" class="task-text <?php echo $task['checked'] ? 'line-through text-gray-400' : ''; ?> <?php echo $task['star'] ? 'text-yellow-500' : ''; ?>">
                           <?php echo htmlspecialchars($task['title']); ?>
                         </span>
                       </div>

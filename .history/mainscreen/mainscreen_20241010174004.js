@@ -75,7 +75,30 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error:", error));
   }
 
+  // Hàm để thêm hoặc xóa gạch ngang trên task
+  function toggleTaskComplete2(checkbox) {
+    const taskText = checkbox.parentElement.querySelector(".task-text");
+    const isChecked = checkbox.checked;
 
+    if (isChecked) {
+      taskText.classList.add("line-through", "text-gray-400");
+    } else {
+      taskText.classList.remove("line-through", "text-gray-400");
+    }
+
+    // Cập nhật trạng thái vào cơ sở dữ liệu qua AJAX
+    const taskId = checkbox.getAttribute("data-task-id");
+    const checkedStatus = isChecked ? 1 : 0;
+
+    fetch("search.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `task_id=${taskId}&checked=${checkedStatus}`,
+    })
+      .then((response) => response.text())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error));
+  }
 
   // Hàm để toggle ngôi sao (star) task
   function toggleStar(starIcon) {
@@ -264,6 +287,9 @@ document.addEventListener("DOMContentLoaded", () => {
     checkbox.addEventListener("change", () => toggleTaskComplete(checkbox));
   });
 
+  document.querySelectorAll(".toggle-complete").forEach((checkbox) => {
+    checkbox.addEventListener("change", () => toggleTaskComplete2(checkbox));
+  });
 
   // Sự kiện: Hiển thị và ẩn modal thêm task
   document

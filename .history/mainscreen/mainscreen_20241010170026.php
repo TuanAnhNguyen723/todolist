@@ -89,9 +89,9 @@ include '../mainscreen/mainscreenController.php';
           <!-- Task List -->
           <div class="w-2/3">
             <!-- Task Groups by Date -->
-            <div class="task-container" id="showdata">
+            <div class="task-container">
               <?php foreach ($tasks_by_date as $date => $tasks): ?>
-                <div class="mb-4 border-b border-b-black pt-4" >
+                <div class="mb-4 border-b border-b-black pt-4" id="showdata">
                   <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
 
                   <?php foreach ($tasks as $task): ?>

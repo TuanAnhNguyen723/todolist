@@ -183,7 +183,7 @@ if ($result->num_rows > 0) {
 }
 
 
-// Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_end
+// Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
 $sql = "SELECT time_end, 
                COUNT(*) AS total_tasks, 
                COUNT(CASE WHEN checked = 1 THEN 1 END) AS completed_tasks, 
@@ -210,5 +210,20 @@ if ($result->num_rows > 0) {
 }
 
 
+$title = $_POST['title'];
+
+$sql = "SELECT * FROM task WHERE title LIKE '$title%'";
+$query = mysqli_query($conn,$sql);
+$data = '';
+
+while($row = mysqli_fetch_assoc($query))
+{
+
+    $data = "<tr>
+    <td></td>
+    ".$row('title')."
+    </tr>";
+}
+echo $data
 // Đóng kết nối
 $conn->close();

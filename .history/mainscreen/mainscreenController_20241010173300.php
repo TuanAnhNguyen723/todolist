@@ -48,16 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bind_param("i", $task_id);
 
         if ($stmt->execute()) {
-
+            // Xóa thành công
         } else {
-           
+            // Xử lý lỗi
         }
 
         $stmt->close();
         $conn->close();
         exit();
     }
-
 
     // Kiểm tra task_id để xác định là thêm mới hay chỉnh sửa
     $task_id = isset($_POST['task_id']) ? intval($_POST['task_id']) : 0;
@@ -138,6 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 }
 
+// Xử lý yêu cầu lấy thông tin task
 if (isset($_GET['task_id'])) {
     $task_id = intval($_GET['task_id']); // Đảm bảo task_id là số nguyên hợp lệ
 
@@ -166,7 +166,6 @@ if (isset($_GET['task_id'])) {
     exit();
 }
 
-
 // Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
 $sql = "SELECT * FROM task ORDER BY time_end DESC";
 $result = $conn->query($sql);
@@ -182,8 +181,7 @@ if ($result->num_rows > 0) {
     $tasks_by_date = []; // Không có dữ liệu
 }
 
-
-// Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_end
+// Truy vấn tổng hợp nhiệm vụ theo thời gian kết thúc
 $sql = "SELECT time_end, 
                COUNT(*) AS total_tasks, 
                COUNT(CASE WHEN checked = 1 THEN 1 END) AS completed_tasks, 
@@ -209,6 +207,6 @@ if ($result->num_rows > 0) {
     $task_summary = []; // Không có dữ liệu
 }
 
-
 // Đóng kết nối
 $conn->close();
+?>

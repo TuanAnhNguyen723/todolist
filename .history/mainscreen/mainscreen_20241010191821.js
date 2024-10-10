@@ -399,16 +399,18 @@ document.getElementById("search-input").addEventListener("input", function () {
   });
 });
 
-$(document).ready(function () {
-  $("#search-input").on("keyup", function () {
-    var searchInput = $(this).val();
-    $.ajax({
-      method: "POST",
-      url: "search.php",
-      data: { title: searchInput },
+$(document).on('submit', '#searchForm', function (e) {
+  e.preventDefault();  // Ngăn form reload lại trang
+
+  $.ajax({
+      type: 'POST',
+      url: 'http://localhost/TodoList/mainscreen/search.php',
+      data: $(this).serialize(), // Dữ liệu từ form
       success: function (response) {
-        $("#showdata").html(response);
+          $('#resultContainer').html(response); // Hiển thị kết quả trả về
       },
-    });
+      error: function (xhr, status, error) {
+          console.log('Error: ' + error);
+      }
   });
 });

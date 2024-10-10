@@ -190,7 +190,7 @@ $sql = "SELECT time_end,
                COUNT(CASE WHEN star = 1 THEN 1 END) AS starred_tasks 
         FROM task
         GROUP BY time_end
-        ORDER BY time_end DESC";
+        ORDER BY time_end ASC";
 
 $result = $conn->query($sql);
 

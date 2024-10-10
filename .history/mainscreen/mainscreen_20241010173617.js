@@ -75,8 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error:", error));
   }
 
-
-
   // Hàm để toggle ngôi sao (star) task
   function toggleStar(starIcon) {
     const taskText =
@@ -146,6 +144,20 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .catch((error) => console.error("Error:", error));
     });
+
+
+          // Cập nhật trạng thái "star" vào cơ sở dữ liệu qua AJAX
+          fetch("search.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `task_id=${taskId}&star=${isStarred}`,
+          })
+            .then((response) => response.text())
+            .then((data) => {
+              console.log(data); // Kiểm tra kết quả trả về từ server
+            })
+            .catch((error) => console.error("Error:", error));
+        });
   });
 
   // Hiển thị modal thêm task mới
@@ -263,7 +275,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".toggle-complete").forEach((checkbox) => {
     checkbox.addEventListener("change", () => toggleTaskComplete(checkbox));
   });
-
 
   // Sự kiện: Hiển thị và ẩn modal thêm task
   document
@@ -407,6 +418,7 @@ $(document).ready(function () {
       url: "search.php",
       data: { title: searchInput },
       success: function (response) {
+
         $("#showdata").html(response);
       },
     });

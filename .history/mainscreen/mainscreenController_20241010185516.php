@@ -168,7 +168,7 @@ if (isset($_GET['task_id'])) {
 
 
 // Truy vấn tất cả các nhiệm vụ từ bảng task và sắp xếp theo time_start
-$sql = "SELECT * FROM task ORDER BY time_end DESC";
+$sql = "SELECT * FROM task ORDER BY time_end ASC";
 $result = $conn->query($sql);
 
 $tasks_by_date = [];

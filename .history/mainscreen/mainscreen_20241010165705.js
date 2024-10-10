@@ -75,8 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((error) => console.error("Error:", error));
   }
 
-
-
   // Hàm để toggle ngôi sao (star) task
   function toggleStar(starIcon) {
     const taskText =
@@ -264,7 +262,6 @@ document.addEventListener("DOMContentLoaded", () => {
     checkbox.addEventListener("change", () => toggleTaskComplete(checkbox));
   });
 
-
   // Sự kiện: Hiển thị và ẩn modal thêm task
   document
     .querySelector(".newtask")
@@ -407,6 +404,7 @@ $(document).ready(function () {
       url: "search.php",
       data: { title: searchInput },
       success: function (response) {
+        alert(searchInput);
         $("#showdata").html(response);
       },
     });
