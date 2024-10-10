@@ -378,3 +378,29 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// kiem tra nv ngay hom nay
+document.addEventListener("DOMContentLoaded", function () {
+  const todayButton = document.getElementById("todayButton");
+
+  todayButton.addEventListener("click", function () {
+    const today = new Date().toISOString().split('T')[0]; 
+
+    const tasks = document.querySelectorAll(".task-container2");
+    let found = false;
+    
+    tasks.forEach(function (task) {
+      const taskEndDate = task.querySelector(".task-end-date"); 
+      if (taskEndDate && taskEndDate.textContent.trim() === today) {
+        task.scrollIntoView({ behavior: "smooth", block: "center" });
+        task.classList.add("bg-yellow-100"); 
+        found = true;
+      }
+    });
+
+    if (!found) {
+      alert("今日のタスクはありません。");
+    }
+  });
+});
+
+// focus task in menu task

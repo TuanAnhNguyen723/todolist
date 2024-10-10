@@ -17,14 +17,14 @@ include '../mainscreen/mainscreenController.php';
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     />
     
-    <link href="./mainscreen.css">
+    <link rel="stylesheet" href="./mainscreen.css">
     <script src="./mainscreen.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Flatpickr CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<!-- Flatpickr JS -->
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
 
@@ -33,25 +33,40 @@ include '../mainscreen/mainscreenController.php';
   <body class="bg-gray-50">
 
     <!-- Header Section -->
-    <header class="bg-white shadow p-4 flex justify-between items-center">
-      <div class="flex items-center">
+    <header class="bg-white shadow px-10 py-2 flex justify-between items-center">
+      <div class="flex items-center ms-20">
+        <div>
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_10_99)">
+          <path d="M23.9995 19.6363V28.9309H36.9158C36.3487 31.9199 34.6466 34.4509 32.094 36.1527L39.883 42.1964C44.4212 38.0075 47.0394 31.8547 47.0394 24.5456C47.0394 22.8438 46.8867 21.2073 46.603 19.6366L23.9995 19.6363Z" fill="#006BBB"/>
+          <path d="M10.5492 28.5681L8.7925 29.9128L2.57422 34.7564C6.5233 42.589 14.6172 48 23.999 48C30.4788 48 35.9115 45.8618 39.8825 42.1965L32.0934 36.1528C29.9552 37.5928 27.2279 38.4656 23.999 38.4656C17.759 38.4656 12.4574 34.2547 10.559 28.5819L10.5492 28.5681Z" fill="#006BBB"/>
+          <path d="M2.57436 13.2437C0.938084 16.4726 0 20.1163 0 23.9999C0 27.8834 0.938084 31.5271 2.57436 34.7561C2.57436 34.7778 10.5599 28.5597 10.5599 28.5597C10.08 27.1197 9.79624 25.5926 9.79624 23.9996C9.79624 22.4067 10.08 20.8795 10.5599 19.4395L2.57436 13.2437Z" fill="#006BBB"/>
+          <path d="M23.9995 9.55636C27.5341 9.55636 30.6758 10.7781 33.1849 13.1345L40.0576 6.2619C35.8903 2.37833 30.4796 0 23.9995 0C14.6177 0 6.5233 5.38908 2.57422 13.2437L10.5596 19.44C12.4576 13.7672 17.7595 9.55636 23.9995 9.55636Z" fill="#006BBB"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_10_99">
+          <rect width="48" height="48" fill="white"/>
+          </clipPath>
+          </defs>
+          </svg>
 
+        </div>
 
-      <div></div>
-
-      <h1 class="text-3xl font-bold text-blue-500">
-          <span class="text-5xl text-blue-800">G</span>etItDone
-      </h1>
+        <h1 class="text-3xl font-bold text-blue-500 mt-3">
+            etItDone
+        </h1>
       </div>
-      <div class="flex items-center">
-        <span class="text-gray-700 mr-4"
-          >KietCT <span class="text-sm text-gray-500">(Admin)</span></span
-        >
+      <div class="flex items-center me-20">
+        <span class="text-black mr-4">
+          <p class="font-bold">KietCT</p>
+          <p class="text-xs text-gray-500">Admin</p>
+        </span>
+        <i class="fa-solid fa-chevron-down text-blue-500"></i>
       </div>
     </header>
 
     <!-- Main Section -->
-    <main class="container mx-auto mt-8">
+    <main class="container mx-auto mt-5 max-w-screen-xl ">
       <div class="flex justify-between">
         <!-- Task List -->
         <div class="w-full bg-white p-4 shadow rounded-lg">
@@ -60,8 +75,13 @@ include '../mainscreen/mainscreenController.php';
             <h2 class="text-xl font-bold">タスク一覧</h2>
 
             <div class="flex items-center space-x-4">
+              <!-- Today Icon -->
+              <button id="todayButton" class="text-blue-500 border border-blue-500 px-2 py-1 rounded-lg hover:bg-blue-500 hover:text-white">
+                今日
+              </button>
+
               <!-- Filter Icon -->
-              <button class="text-blue-500 hover:text-gray-700">
+              <button class="text-blue-500 hover:text-gray-700 rotate-90">
                 <i class="fas fa-sliders-h"></i>
               </button>
 
@@ -86,19 +106,22 @@ include '../mainscreen/mainscreenController.php';
         <!-- Tạo một khối Flex cho task list và task summary -->
         <div class="flex justify-between border-t-black border-t-2 pt-4 ">
           <!-- Task List -->
-          <div class="w-2/3">
+          <div class="w-2/3" style="height: 70vh; overflow-y: scroll; scrollbar-width: none;">
             <!-- Task Groups by Date -->
-            <div class="task-container">
+            <div class="task-container me-3">
+              <!-- Thêm ID cho các task, để dễ dàng truy cập vào chúng trong JavaScript -->
               <?php foreach ($tasks_by_date as $date => $tasks): ?>
-                <div class="mb-4 border-b border-b-black pt-4">
-                  <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?></h3>
-
+                <div class="mb-4 border-b border-b-black pt-4" data-date="<?php echo $date; ?>">
+                  <h3 class="font-bold text-gray-700">
+                    <?php echo htmlspecialchars($date); ?>
+                  </h3>
                   <?php foreach ($tasks as $task): ?>
                     <div class="task-container2 flex justify-between items-center space-x-4 my-2">
                       <div class="flex items-center space-x-4">
                         <input
                           type="checkbox"
-                          class="form-checkbox h-5 w-5 toggle-complete <?php echo $task['star'] ? 'accent-yellow-500' : ''; ?>"
+                          class="form-checkbox h-5 w-5 toggle-complete 
+                          <?php echo $task['star'] ? 'accent-yellow-500' : ''; ?>"
                           data-task-id="<?php echo $task['task_id']; ?>"
                           <?php echo $task['checked'] ? 'checked' : ''; ?>
                         />
@@ -109,7 +132,7 @@ include '../mainscreen/mainscreenController.php';
                       <div class="flex space-x-2">
                         <!-- Nút xem chi tiết -->
                         <button class="text-blue-500 hover:text-blue-700">
-                          <i class="fa fa-eye"></i>
+                          <i class="fa-regular fa-eye"></i>
                         </button>
 
                         <!-- Nút sửa -->
@@ -125,39 +148,44 @@ include '../mainscreen/mainscreenController.php';
                           </button>
                         </form>
 
-                        <!-- // Kết hợp trạng thái star -->
+                        <!-- Nút sao -->
                         <button class="text-gray-500 hover:text-yellow-300 star-icon <?php echo $task['star'] ? 'text-yellow-300' : ''; ?>" data-task-id="<?php echo $task['task_id']; ?>">
                           <i class="fa fa-star"></i>
                         </button>
                       </div>
+                      
+                      <!-- Thêm ngày kết thúc vào đây -->
+                      <span class="task-end-date hidden"><?php echo htmlspecialchars($task['time_end']); ?></span>
                     </div>
                   <?php endforeach; ?>
+
                 </div>
               <?php endforeach; ?>
+
             </div>
           </div>
 
-              <!-- Task Completion Summary -->
-              <div id="task-summary" class="w-1/3 bg-grey-900 p-6 rounded-lg shadow-lg ml-4 bg-neutral-100 border-2">
-                  <?php if (!empty($task_summary)): ?>
-                      <?php foreach ($task_summary as $date => $summary): ?>
-                          <h3 class="font-bold text-gray-700"><?php echo htmlspecialchars($date); ?>:</h3>
-                          <ul class="list-disc pl-5 mb-4 border-b border-b-black pt-4">
-                              <li>完了タスク: 
-                                  <span class="text-blue-500">
-                                      <?php echo htmlspecialchars($summary['completed_tasks']) . '/' . htmlspecialchars($summary['total_tasks']); ?>
-                                  </span>
-                              </li>
-                              <li class="pb-4" >スタータスク: 
-                                  <span class="text-blue-500">
-                                      <?php echo htmlspecialchars($summary['starred_tasks']) . '/' . htmlspecialchars($summary['total_tasks']); ?>
-                                  </span>
-                              </li>
-                          </ul>
-                      <?php endforeach; ?>
-                  <?php else: ?>
-                      <p>データがありません。</p>
-                  <?php endif; ?>
+          <!-- Task Completion Summary -->
+          <div id="task-summary" class="w-1/3 bg-grey-900 p-6 rounded-lg shadow-lg ml-4 bg-neutral-100 border-2" style="height: 490px; overflow-y: scroll; scrollbar-width: none;">
+            <?php if (!empty($task_summary)): ?>
+              <?php foreach ($task_summary as $date => $summary): ?>
+                <h3 class="font-bold text-gray-700 cursor-pointer"><?php echo htmlspecialchars($date); ?>:</h3>
+                <ul class="list-disc pl-5 mb-4 border-b border-b-black pt-4">
+                  <li>完了タスク: 
+                    <span class="text-blue-500">
+                      <?php echo htmlspecialchars($summary['completed_tasks']) . '/' . htmlspecialchars($summary['total_tasks']); ?>
+                    </span>
+                  </li>
+                  <li class="pb-4" >スタータスク: 
+                    <span class="text-blue-500">
+                      <?php echo htmlspecialchars($summary['starred_tasks']) . '/' . htmlspecialchars($summary['total_tasks']); ?>
+                    </span>
+                  </li>
+                </ul>
+                <?php endforeach; ?>
+                <?php else: ?>
+                  <p>データがありません。</p>
+                <?php endif; ?>
               </div>
             </div>
         </div>
@@ -189,23 +217,21 @@ include '../mainscreen/mainscreenController.php';
                 <!-- Date Pickers -->
                 <div class="flex justify-between space-x-4 mb-4">
                   <div class="w-1/2 relative">
-                    <label for="time_start" class="sr-only">開始日</label>
                     <input
                       type="text"
                       name="time_start"
                       class="w-full border border-gray-300 p-2 rounded-lg"
-                      placeholder="yyyy-mm-dd"
+                      placeholder="開始日"
                     />
                     <!-- Icon -->
                 <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                   </div>
                   <div class="w-1/2 relative">
-                    <label for="time_end" class="sr-only">End Date</label>
                     <input
                       type="text"
                       name="time_end"
                       class="w-full border border-gray-300 p-2 rounded-lg"
-                      placeholder="yyyy-mm-dd"
+                      placeholder="終了日"
                     />
                     <!-- Icon -->
                 <i class="fa-regular fa-clock absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -243,10 +269,7 @@ include '../mainscreen/mainscreenController.php';
         </div>
 
         <!-- Filter Modal -->
-        <div
-          id="filterModal"
-          class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center hidden"
-        >
+        <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center hidden">
           <div class="bg-white p-6 rounded-lg shadow-lg w-80">
             <h2 class="text-xl font-bold mb-4">フィルターオプション</h2>
 
